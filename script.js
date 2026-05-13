@@ -234,8 +234,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // ═══════════════════════════════════════════
   // 9. FILTRO GALLERIA
   // ═══════════════════════════════════════════
-    const filterBtns = document.querySelectorAll('.gf-btn');
+  (function initGallery() {
+    const filterBtns   = document.querySelectorAll('.gf-btn');
     const galleryItems = document.querySelectorAll('.gal-item');
+
+    if (!filterBtns.length || !galleryItems.length) return;
 
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -255,19 +258,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ── LIGHTBOX ── */
-    const lightbox     = document.getElementById('lightbox');
-    const lightboxImg  = document.getElementById('lightboxImg');
-    const lightboxCap  = document.getElementById('lightboxCaption');
+    const lightbox      = document.getElementById('lightbox');
+    const lightboxImg   = document.getElementById('lightboxImg');
+    const lightboxCap   = document.getElementById('lightboxCaption');
     const lightboxClose = document.getElementById('lightboxClose');
+
+    if (!lightbox || !lightboxImg) return;
 
     document.querySelectorAll('.gal-img-wrap').forEach(wrap => {
       wrap.addEventListener('click', () => {
         const img   = wrap.querySelector('img');
         const card  = wrap.closest('.gal-card');
-        const title = card.querySelector('.gal-title')?.textContent || '';
-        const year  = card.querySelector('.gal-year')?.textContent || '';
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
+        const title = card?.querySelector('.gal-title')?.textContent || '';
+        const year  = card?.querySelector('.gal-year')?.textContent || '';
+        lightboxImg.src = img?.src || '';
+        lightboxImg.alt = img?.alt || '';
         lightboxCap.textContent = title + (year ? ' — ' + year : '');
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -280,9 +285,13 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => { lightboxImg.src = ''; }, 300);
     }
 
-    lightboxClose.addEventListener('click', closeLightbox);
+    if (lightboxClose) {
+      lightboxClose.addEventListener('click', closeLightbox);
+    }
     lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  })();
 
   // ═══════════════════════════════════════════
   // 10. MUSIC PLAYER
