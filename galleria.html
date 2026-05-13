@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>La Corona &amp; il Mondo — Galleria</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+<base target="_blank">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">La Corona &amp; il Mondo</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="esploratori.html">Esploratori</a></li>
+      <li><a href="monarchia.html">La Monarchia</a></li>
+      <li><a href="timeline.html">Timeline</a></li>
+      <li><a href="galleria.html" class="active">Galleria</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="page-header-content container">
+      <p class="section-label">Documenti &amp; Immagini</p>
+      <h1 class="section-title" style="font-family:'Cinzel Decorative',serif; font-size:clamp(2rem,5vw,3.2rem);">
+        La <span style="color:var(--gold)">Galleria</span>
+      </h1>
+      <div class="gold-line mx-auto"></div>
+      <p class="section-body mx-auto text-center">
+        Carte geografiche, ritratti e documenti storici dell'epoca delle grandi scoperte geografiche.
+      </p>
+    </div>
+  </section>
+
+  <!-- FILTRI -->
+  <section style="padding: 48px 0 0; position:relative; z-index:1;">
+    <div class="container">
+      <div class="gallery-filters reveal">
+        <button class="gf-btn active" data-filter="all">Tutto</button>
+        <button class="gf-btn" data-filter="mappe">Mappe</button>
+        <button class="gf-btn" data-filter="ritratti">Ritratti</button>
+        <button class="gf-btn" data-filter="documenti">Documenti</button>
+        <button class="gf-btn" data-filter="navi">Navi &amp; Rotte</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRIGLIA GALLERIA -->
+  <section style="padding: 48px 0 100px; position:relative; z-index:1;">
+    <div class="container">
+      <div class="gallery-grid" id="galleryGrid">
+
+        <!-- ══════════════ MAPPE ══════════════ -->
+
+        <!-- Waldseemüller 1507 -->
+        <div class="gal-item reveal" data-cat="mappe">
+          <div class="gal-card">
+            <div class="gal-img-wrap">
+              <img
+                src="/img/Waldseemuller_map_2.jpg"
+                alt="Universalis Cosmographia di Waldseemüller, 1507"
+                class="gal-real-img"
+                loading="lazy"
+              />
+              <div class="gal-overlay">
+                <span class="gal-zoom">&#8689;</span>
+              </div>
+            </div>
+            <div class="gal-info">
+              <span class="gal-cat">Mappe</span>
+              <h3 class="gal-title">Universalis Cosmographia</h3>
+              <p class="gal-desc">La carta di Waldseemüller del 1507, prima mappa a riportare il nome "America" per il Nuovo Mondo scoperto da Vespucci e Colombo.</p>
+              <span class="gal-year">1507</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Juan de la Cosa 1500 -->
+        <div class="gal-item reveal" data-cat="mappe">
+          <div class="gal-card">
+            <div class="gal-img-wrap">
+              <img
+                src="/img/Juan-de-la-Cosa-North-up-map-1500.jpg"
+                alt="Mappamondo di Juan de la Cosa, 1500"
+                class="gal-real-img"
+                loading="lazy"
+              />
+              <div class="gal-overlay">
+                <span class="gal-zoom">&#8689;</span>
+              </div>
+            </div>
+            <div class="gal-info">
+              <span class="gal-cat">Mappe</span>
+              <h3 class="gal-title">Mappamondo di Juan de la Cosa</h3>
+              <p class="gal-desc">Realizzata nel 1500 dal pilota di Colombo, è considerata la prima carta mondiale a raffigurare il continente americano, con la costa del Nuovo Mondo tracciata di suo pugno.</p>
+              <span class="gal-year">1500</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Battista Agnese – carta nautica Oceano Indiano -->
+        <div class="gal-item reveal" data-cat="mappe">
+          <div class="gal-card">
+            <div class="gal-img-wrap">
+              <img
+                src="/img/Battista-Agnese-carta-nautica-dellOIceano-Indiano-1554-Marciana.jpg"
+                alt="Carta nautica dell'Oceano Indiano di Battista Agnese, 1554"
+                class="gal-real-img"
+                loading="lazy"
+              />
+              <div class="gal-overlay">
+                <span class="gal-zoom">&#8689;</span>
+              </div>
+            </div>
+            <div class="gal-info">
+              <span class="gal-cat">Mappe</span>
+              <h3 class="gal-title">Carta Nautica dell'Oceano Indiano</h3>
+              <p class="gal-desc">Battista Agnese, cartografo genovese attivo a Venezia, realizzò questa straordinaria carta nautica nel 1554. Le linee di rotta rosse (rombi) guidavano i navigatori attraverso mari ancora in gran parte inesplorati.</p>
+              <span class="gal-year">1554</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════ RITRATTI ══════════════ -->
+
+        <!-- Colombo -->
+        <div class="gal-item reveal" data-cat="ritratti">
+          <div class="gal-card">
+            <div class="gal-img-wrap">
+              <img
+                src="/img/Musei di Genova - Galata -  Cristoforo Colombo - 3487.jpg"
+                alt="Ritratto di Cristoforo Colombo"
+                class="gal-real-img gal-real-img--portrait"
+                loading="lazy"
+              />
+              <div class="gal-overlay">
+                <span class="gal-zoom">&#8689;</span>
+              </div>
+            </div>
+            <div class="gal-info">
+              <span class="gal-cat">Ritratti</span>
+              <h3 class="gal-title">Ritratto di Cristoforo Colombo</h3>
+              <p class="gal-desc">Nessun ritratto autentico di Colombo è sopravvissuto. I numerosi ritratti eseguiti post-mortem, come questo conservato al Museo Galata di Genova, si basano su descrizioni dell'epoca.</p>
+              <span class="gal-year">post. 1506</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Isabella di Castiglia -->
+        <div class="gal-item reveal" data-cat="ritratti">
+          <div class="gal-card">
+            <div class="gal-img-wrap">
+              <img
+                src="/img/IsabellaofCastile03.jpg"
+                alt="Ritratto di Isabella di Castiglia"
+                class="gal-real-img gal-real-img--portrait"
+                loading="lazy"
+              />
+              <div class="gal-overlay">
+                <span class="gal-zoom">&#8689;</span>
+              </div>
+            </div>
+            <div class="gal-info">
+              <span class="gal-cat">Ritratti</span>
+              <h3 class="gal-title">Ritratto di Isabella di Castiglia</h3>
+              <p class="gal-desc">La sovrana che finanziò il viaggio di Colombo. Il ritratto la mostra con un libro, simbolo della sua fede e della sua istruzione eccezionale per l'epoca. Regnò dal 1474 fino alla morte nel 1504.</p>
+              <span class="gal-year">c. 1490</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amerigo Vespucci -->
+        <div class="gal-item reveal" data-cat="ritratti">
+          <div class="gal-card">
+            <div class="gal-img-wrap">
+              <img
+                src="/img/Charles_Willson_Peale_-_Portrait_of_Amerigo_Vespucci_(1452-1512)_1816_-_(MeisterDrucke-579403).jpg"
+                alt="Ritratto di Amerigo Vespucci"
+                class="gal-real-img gal-real-img--portrait"
+                loading="lazy"
+              />
+              <div class="gal-overlay">
+                <span class="gal-zoom">&#8689;</span>
+              </div>
+            </div>
+            <div class="gal-info">
+              <span class="gal-cat">Ritratti</span>
+              <h3 class="gal-title">Ritratto di Amerigo Vespucci</h3>
+              <p class="gal-desc">Il fiorentino Amerigo Vespucci fu il primo a capire che le terre raggiunte da Colombo erano un continente nuovo. Dipinto da Charles Willson Peale nel 1816, lo ritrae con uno strumento di navigazione.</p>
+              <span class="gal-year">1816 (post.)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════ DOCUMENTI ══════════════ -->
+
+        <!-- Diario di Colombo (Las Casas) -->
+        <div class="gal-item reveal" data-cat="documenti">
+          <div class="gal-card">
+            <div class="gal-img-wrap">
+              <img
+                src="/img/Copy_of_the_abstract_from_Columbus'_journal_by_Bartolomé_de_las_Casas.jpg"
+                alt="Estratto del diario di Colombo trascritto da Bartolomé de las Casas"
+                class="gal-real-img"
+                loading="lazy"
+              />
+              <div class="gal-overlay">
+                <span class="gal-zoom">&#8689;</span>
+              </div>
+            </div>
+            <div class="gal-info">
+              <span class="gal-cat">Documenti</span>
+              <h3 class="gal-title">Diario di bordo di Colombo</h3>
+              <p class="gal-desc">Il diario originale di Colombo è andato perduto. Sopravvive solo nella trascrizione parziale di Bartolomé de las Casas. Nell'entrata del 12 ottobre 1492 si legge: <em>"Alle due di notte apparve la terra."</em></p>
+              <span class="gal-year">1492</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trattato di Tordesillas -->
+        <div class="gal-item reveal" data-cat="documenti">
+          <div class="gal-card">
+            <div class="gal-img-wrap">
+              <img
+                src="/img/Treaty_of_Tordesillas.jpg"
+                alt="Trattato di Tordesillas, 1494"
+                class="gal-real-img"
+                loading="lazy"
+              />
+              <div class="gal-overlay">
+                <span class="gal-zoom">&#8689;</span>
+              </div>
+            </div>
+            <div class="gal-info">
+              <span class="gal-cat">Documenti</span>
+              <h3 class="gal-title">Trattato di Tordesillas</h3>
+              <p class="gal-desc">Il documento originale firmato il 7 giugno 1494 è conservato nell'Archivio General de Indias di Siviglia e nell'Arquivo Nacional di Lisbona. È iscritto nel Registro della Memoria del Mondo dell'UNESCO dal 2007.</p>
+              <span class="gal-year">1494</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lettere di Vespucci -->
+        <div class="gal-item reveal" data-cat="documenti">
+          <div class="gal-card">
+            <div class="gal-img-wrap">
+              <img
+                src="/img/9788898972197_0_0_0_0_0.jpg"
+                alt="Le lettere di Amerigo Vespucci – copertina edizione storica"
+                class="gal-real-img gal-real-img--portrait"
+                loading="lazy"
+              />
+              <div class="gal-overlay">
+                <span class="gal-zoom">&#8689;</span>
+              </div>
+            </div>
+            <div class="gal-info">
+              <span class="gal-cat">Documenti</span>
+              <h3 class="gal-title">Le Lettere di Amerigo Vespucci</h3>
+              <p class="gal-desc">Le <em>Lettere</em> e il <em>Mundus Novus</em> (1503) di Amerigo Vespucci furono stampati e diffusi in tutta Europa in decine di edizioni. Furono la prima pubblicazione a teorizzare l'esistenza di un continente separato dall'Asia.</p>
+              <span class="gal-year">1503</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════ NAVI & ROTTE ══════════════ -->
+
+        <!-- Caravella con etichette -->
+        <div class="gal-item reveal" data-cat="navi">
+          <div class="gal-card">
+            <div class="gal-img-wrap">
+              <img
+                src="/img/171a72f5-cf51-45bf-b6df-43150ef85d4c_772x600.jpg"
+                alt="Schema di una caravella con etichette in italiano"
+                class="gal-real-img"
+                loading="lazy"
+              />
+              <div class="gal-overlay">
+                <span class="gal-zoom">&#8689;</span>
+              </div>
+            </div>
+            <div class="gal-info">
+              <span class="gal-cat">Navi &amp; Rotte</span>
+              <h3 class="gal-title">La Caravella: Anatomia di un'Epoca</h3>
+              <p class="gal-desc">La caravella fu il vascello che rese possibile l'età delle scoperte. Leggera, manovrabile e capace di navigare contro il vento grazie alle vele latine, permetteva di risalire le correnti oceaniche dove le navi tradizionali non riuscivano.</p>
+              <span class="gal-year">sec. XV</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rotta di Colombo (mappa atlantico) -->
+        <div class="gal-item reveal" data-cat="navi">
+          <div class="gal-card">
+            <div class="gal-img-wrap">
+              <img
+                src="/img/images.jpg"
+                alt="Mappa della rotta di Colombo attraverso l'Atlantico, 1492"
+                class="gal-real-img"
+                loading="lazy"
+              />
+              <div class="gal-overlay">
+                <span class="gal-zoom">&#8689;</span>
+              </div>
+            </div>
+            <div class="gal-info">
+              <span class="gal-cat">Navi &amp; Rotte</span>
+              <h3 class="gal-title">La Rotta di Colombo</h3>
+              <p class="gal-desc">La rotta del 1492: da Palos de la Frontera, attraverso le Canarie, sfruttando gli alisei del Nord Atlantico verso ovest. 70 giorni di navigazione, 7.400 km percorsi. Il ritorno sfruttò invece le correnti più settentrionali.</p>
+              <span class="gal-year">1492</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Circumnavigazione Magellano-Elcano -->
+        <div class="gal-item reveal" data-cat="navi">
+          <div class="gal-card">
+            <div class="gal-img-wrap">
+              <img
+                src="/img/Mappa-Viaggio-Ferdinando-Magellano.jpg"
+                alt="Mappa del viaggio di circumnavigazione di Magellano ed Elcano"
+                class="gal-real-img"
+                loading="lazy"
+              />
+              <div class="gal-overlay">
+                <span class="gal-zoom">&#8689;</span>
+              </div>
+            </div>
+            <div class="gal-info">
+              <span class="gal-cat">Navi &amp; Rotte</span>
+              <h3 class="gal-title">La Circumnavigazione di Magellano-Elcano</h3>
+              <p class="gal-desc">Il percorso della prima circumnavigazione del globo (1519–1522): da Siviglia verso sud, attraverso lo Stretto di Magellano, il Pacifico, le Filippine, l'Oceano Indiano e il Capo di Buona Speranza. 80.000 km in tre anni.</p>
+              <span class="gal-year">1519–1522</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- fine gallery-grid -->
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Immagine ingrandita">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Chiudi">&times;</button>
+    <div class="lightbox-content">
+      <img id="lightboxImg" src="" alt="" />
+      <p id="lightboxCaption" class="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <!-- SEZIONE CURIOSITÀ -->
+  <section style="padding: 80px 0; border-top: 1px solid rgba(201,168,76,0.1); position:relative; z-index:1;">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-lg-6 reveal">
+          <p class="section-label">Lo sapevi?</p>
+          <h2 class="section-title">Curiosità storiche</h2>
+          <div class="gold-line"></div>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4 reveal">
+          <div class="curio-card">
+            <div class="curio-icon">&#9875;</div>
+            <h4 class="curio-title">Colombo morì senza saperlo</h4>
+            <p class="curio-text">Cristoforo Colombo fu convinto fino alla morte di aver raggiunto le coste dell'Asia. Chiamò i nativi "Indios" proprio perché credeva di essere nelle Indie. Sarà Vespucci a capire la vera natura della scoperta.</p>
+          </div>
+        </div>
+        <div class="col-md-4 reveal">
+          <div class="curio-card">
+            <div class="curio-icon">&#127758;</div>
+            <h4 class="curio-title">Solo 18 sopravvissuti su 270</h4>
+            <p class="curio-text">Del viaggio di Magellano partirono 270 uomini su cinque navi. Tornarono in 18, su una sola nave — la <em>Victoria</em>. Molti morirono di scorbuto, altri in battaglie. Ma avevano dimostrato che la Terra è una sfera.</p>
+          </div>
+        </div>
+        <div class="col-md-4 reveal">
+          <div class="curio-card">
+            <div class="curio-icon">&#128506;</div>
+            <h4 class="curio-title">L'America non si chiama "Colombia"</h4>
+            <p class="curio-text">Il nuovo continente prese il nome da Amerigo Vespucci e non da Colombo per via delle sue lettere, tradotte in latino e diffuse in tutta Europa. Waldseemüller, impressionato da Vespucci, scrisse "America" sulla sua mappa del 1507.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION -->
+  <section style="padding: 80px 0; text-align:center; border-top: 1px solid rgba(201,168,76,0.1);">
+    <div class="container reveal">
+      <p class="section-label">Hai visto tutto?</p>
+      <h2 class="section-title">Torna alla Home</h2>
+      <div class="gold-line mx-auto"></div>
+      <p class="section-body mx-auto text-center mb-4">
+        Ripercorri l'intera storia delle scoperte geografiche dall'inizio.
+      </p>
+      <a href="index.html" class="btn-gold" style="opacity:1;">&#8592; Home</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-4">
+          <div class="footer-logo">La Corona &amp; il Mondo</div>
+          <p class="footer-desc">Progetto scolastico realizzato dalla classe terza C. Un viaggio tra le scoperte geografiche e la nascita della monarchia spagnola.</p>
+        </div>
+        <div class="col-lg-2 offset-lg-1">
+          <p class="footer-heading">Pagine</p>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="esploratori.html">Esploratori</a></li>
+            <li><a href="monarchia.html">La Monarchia</a></li>
+            <li><a href="timeline.html">Timeline</a></li>
+            <li><a href="galleria.html">Galleria</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2">
+          <p class="footer-heading">Argomenti</p>
+          <ul class="footer-links">
+            <li><a href="#">Reconquista</a></li>
+            <li><a href="#">Colombo</a></li>
+            <li><a href="#">Tordesillas</a></li>
+            <li><a href="#">Il Nuovo Mondo</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 &mdash; Progetto di gruppo &middot; Classe III C</p>
+        <span class="group-names">HTML &middot; CSS &middot; Bootstrap &middot; JavaScript &middot; GitHub Pages</span>
+      </div>
+    </div>
+  </footer>
+
+  <button id="backToTop" aria-label="Torna su">&uarr;</button>
+
+  <!-- MUSIC PLAYER -->
+  <div id="musicPlayer">
+    <div class="player-header">
+      <span class="player-label"><span id="playerDot"></span>Now Playing</span>
+    </div>
+    <div class="player-track">Colonna sonora</div>
+    <div class="player-track-sub">Colonna sonora del sito</div>
+    <div class="player-wave" id="playerWave">
+      <div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div>
+    </div>
+    <div class="player-progress-wrap" id="progressWrap">
+      <div class="player-progress-fill" id="progressFill"></div>
+    </div>
+    <div class="player-time">
+      <span id="timeCurrent">0:00</span>
+      <span id="timeTotal">0:00</span>
+    </div>
+    <div class="player-controls">
+      <button class="player-btn play-btn" id="playBtn" aria-label="Play/Pausa">&#9654;</button>
+      <div class="player-volume">
+        <span class="player-vol-icon">&#128266;</span>
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+      </div>
+    </div>
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="audio/Lil Uzi Vert- 20 Min (Instrumental).mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+  
+</body>
+</html>

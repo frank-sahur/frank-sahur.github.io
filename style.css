@@ -1,0 +1,1521 @@
+
+:root {  /* Definizione variabili CSS globali per colori e palette glitch */
+  --gold:       #C9A84C;  /* Oro principale per elementi dorati */
+  --gold-light: #E8C96A;  /* Oro chiaro per stati hover */
+  --deep-red:   #7A1C1C;  /* Rosso scuro per sfondi/gradienti */
+  --dark-bg:    #0E0A06;  /* Sfondo scuro quasi nero */
+  --dark-card:  #1A1209;  /* Sfondo scuro per card/componenti */
+  --parchment:  #F5EDD6;  /* Colore pergamena per testi principali */
+  --text-light: #EDE0C4;  /* Colore testo chiaro */
+  --text-muted: #A08050;  /* Colore testo attenuato/secondario */
+  /* Glitch palette */
+  --glitch-cyan:    #00FFE5;  /* Ciano per effetti glitch */
+  --glitch-magenta: #FF003C;  /* Magenta per effetti glitch */
+  --glitch-yellow:  #FFE600;  /* Giallo per effetti glitch */
+}
+
+/* ─── RESET & BASE ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }  /* Reset universale */
+
+body {  /* Stile base body: sfondo scuro, font serif, nessuno scroll orizzontale */
+  background-color: var(--dark-bg);  /* Sfondo con colore scuro definito in :root */
+  color: var(--text-light);  /* Colore testo chiaro */
+  font-family: 'EB Garamond', serif;  /* Font serif elegante per testi */
+  font-size: 18px;  /* Dimensione base font 18px */
+  overflow-x: hidden;  /* Nasconde scroll orizzontale */
+}
+
+body::before {  /* Overlay SVG con rumore frattale per effetto texture carta antica */
+  content: '';  /* Pseudo-elemento vuoto necessario */
+  position: fixed;  /* Posizione fissa rispetto alla viewport */
+  inset: 0;  /* Copre tutto lo schermo (top/right/bottom/left: 0) */
+  background-image: url("data:image/svg+xml,...");  /* SVG inline con filtro feTurbulence per rumore frattale */
+  pointer-events: none;  /* Non intercetta click del mouse */
+  z-index: 0;  /* Livello più basso dello stacking */
+  opacity: 0.4;  /* Trasparenza al 40% */
+}
+
+/* ─── TYPOGRAPHY HELPERS ─── */
+.section-label {  /* Etichetta sezione: font decorativo, colore oro, maiuscolo */
+  font-family: 'Cinzel', serif;  /* Font decorativo Cinzel */
+  font-size: 0.65rem;  /* Dimensione piccola per etichette */
+  letter-spacing: 5px;  /* Spaziatura ampia tra lettere */
+  color: var(--gold);  /* Colore oro */
+  text-transform: uppercase;  /* Testo in maiuscolo */
+  margin-bottom: 12px;  /* Margine inferiore */
+}
+.section-title {  /* Titolo sezione: dimensione responsive, colore pergamena */
+  font-family: 'Cinzel', serif;  /* Font decorativo Cinzel */
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);  /* Dimensione responsive tra min e max */
+  color: var(--parchment);  /* Colore pergamena */
+  margin-bottom: 20px;  /* Margine inferiore */
+  line-height: 1.3;  /* Interlinea compatta */
+}
+.section-body {  /* Corpo testo: leggibile, colore attenuato, larghezza max */
+  font-size: 1.05rem;  /* Leggermente più grande del base */
+  color: var(--text-muted);  /* Colore testo attenuato */
+  line-height: 1.9;  /* Interlinea ampia per leggibilità */
+  max-width: 580px;  /* Larghezza massima per leggibilità */
+}
+.gold-line {  /* Linea decorativa orizzontale dorata */
+  width: 50px;  /* Larghezza 50px */
+  height: 2px;  /* Altezza 2px */
+  background: var(--gold);  /* Sfondo oro */
+  margin-bottom: 32px;  /* Margine inferiore */
+}
+
+/* ─── NAVBAR ─── */
+nav {  /* Navbar fissa in alto con flexbox */
+  position: fixed;  /* Posizione fissa */
+  top: 0; left: 0; right: 0;  /* Ancorata ai lati superiori */
+  z-index: 1000;  /* Sopra tutti gli altri elementi */
+  padding: 18px 40px;  /* Padding interno */
+  display: flex;  /* Layout flexbox */
+  justify-content: space-between;  /* Elementi ai lati opposti */
+  align-items: center;  /* Allineamento verticale centrato */
+  transition: background 0.5s, padding 0.4s;  /* Transizione su scroll */
+}
+nav.scrolled {  /* Stile navbar quando la pagina viene scrollata */
+  background: rgba(14, 10, 6, 0.95);  /* Sfondo quasi opaco */
+  backdrop-filter: blur(8px);  /* Effetto sfocatura sullo sfondo */
+  padding: 12px 40px;  /* Padding ridotto */
+  border-bottom: 1px solid rgba(201,168,76,0.2);  /* Bordo dorato sottile */
+}
+.nav-logo {  /* Logo nella navbar */
+  font-family: 'Cinzel', serif;  /* Font Cinzel decorativo */
+  font-size: 1rem;  /* Dimensione font */
+  color: var(--gold);  /* Colore oro */
+  letter-spacing: 3px;  /* Spaziatura lettere */
+  text-transform: uppercase;  /* Maiuscolo */
+  text-decoration: none;  /* Nessuna sottolineatura */
+}
+.nav-links {  /* Lista link di navigazione */
+  list-style: none;  /* Nessun punto elenco */
+  display: flex;  /* Layout orizzontale */
+  gap: 36px;  /* Spazio tra i link */
+}
+.nav-links a {  /* Singolo link di navigazione */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.75rem;  /* Font piccolo */
+  letter-spacing: 2px;  /* Spaziatura lettere */
+  color: var(--text-muted);  /* Colore attenuato */
+  text-decoration: none;  /* Nessuna sottolineatura */
+  text-transform: uppercase;  /* Maiuscolo */
+  transition: color 0.3s;  /* Transizione colore al hover */
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--gold); }  /* Stato hover/attivo: colore oro */
+
+/* Hamburger mobile */
+.nav-toggle {  /* Bottone hamburger per menu mobile */
+  display: none;  /* Nascosto su desktop */
+  flex-direction: column;  /* Righe verticali */
+  gap: 5px;  /* Spazio tra le righe */
+  cursor: pointer;  /* Cursore a mano */
+  background: none;  /* Nessuno sfondo */
+  border: none;  /* Nessun bordo */
+  padding: 4px;  /* Padding interno */
+}
+.nav-toggle span {  /* Singola riga dell'hamburger */
+  display: block;  /* Elemento blocco */
+  width: 24px;  /* Larghezza 24px */
+  height: 2px;  /* Altezza 2px */
+  background: var(--gold);  /* Colore oro */
+  transition: transform 0.3s, opacity 0.3s;  /* Animazione trasformazione */
+}
+
+/* ─── HERO ─── */
+.hero {  /* Sezione hero a schermo intero */
+  position: relative;  /* Per posizionamento elementi interni */
+  height: 100vh;  /* Altezza viewport intera */
+  display: flex;  /* Centratura flex */
+  align-items: center;  /* Centrato verticalmente */
+  justify-content: center;  /* Centrato orizzontalmente */
+  text-align: center;  /* Testo centrato */
+  overflow: hidden;  /* Nasconde overflow */
+}
+.hero-bg {  /* Sfondo della hero con gradienti */
+  position: absolute;  /* Posizionamento assoluto */
+  inset: 0;  /* Copre tutto */
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(122,28,28,0.25) 0%, transparent 70%),  /* Gradiente radiale rosso */
+    radial-gradient(ellipse 60% 80% at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 60%),  /* Gradiente radiale dorato */
+    linear-gradient(180deg, #0E0A06 0%, #1A0F05 50%, #0E0A06 100%);  /* Gradiente lineare scuro */
+}
+.compass-rose {  /* Rosa dei venti decorativa animata */
+  position: absolute;  /* Posizionamento assoluto */
+  width: 500px; height: 500px;  /* Dimensione 500px */
+  top: 50%; left: 50%;  /* Al centro */
+  transform: translate(-50%, -55%);  /* Centratura precisa */
+  opacity: 0.06;  /* Molto trasparente */
+  border: 1px solid var(--gold);  /* Bordo dorato */
+  border-radius: 50%;  /* Forma circolare */
+  animation: slowRotate 60s linear infinite;  /* Rotazione lenta infinita */
+}
+.compass-rose::before, .compass-rose::after {  /* Cerchi concentrici interni */
+  content: '';  /* Pseudo-elementi vuoti */
+  position: absolute;  /* Posizionamento assoluto */
+  inset: 0;  /* Coprono tutto il genitore */
+  border: 1px solid var(--gold);  /* Bordo dorato */
+  border-radius: 50%;  /* Circolari */
+}
+.compass-rose::before { margin: 40px; }  /* Cerchio interno (più piccolo) */
+.compass-rose::after  { margin: 80px; }  /* Cerchio più interno (ancora più piccolo) */
+@keyframes slowRotate { to { transform: translate(-50%, -55%) rotate(360deg); } }  /* Rotazione completa 360° */
+
+.compass-lines {  /* Linee cardinali decorative */
+  position: absolute;  /* Posizionamento assoluto */
+  width: 500px; height: 500px;  /* Stessa dimensione della rosa */
+  top: 50%; left: 50%;  /* Al centro */
+  transform: translate(-50%, -55%);  /* Centratura precisa */
+  opacity: 0.05;  /* Molto trasparenti */
+}
+.compass-lines::before {  /* Linea orizzontale (est-ovest) */
+  content: '';  /* Pseudo-elemento vuoto */
+  position: absolute;  /* Posizionamento assoluto */
+  top: 50%; left: 0; right: 0;  /* Orizzontale al centro */
+  height: 1px;  /* Spessore 1px */
+  background: var(--gold);  /* Colore oro */
+}
+.compass-lines::after {  /* Linea verticale (nord-sud) */
+  content: '';  /* Pseudo-elemento vuoto */
+  position: absolute;  /* Posizionamento assoluto */
+  left: 50%; top: 0; bottom: 0;  /* Verticale al centro */
+  width: 1px;  /* Spessore 1px */
+  background: var(--gold);  /* Colore oro */
+}
+
+.hero-content {  /* Contenuto centrato della hero */
+  position: relative;  /* Sopra gli sfondi */
+  z-index: 2;  /* Livello 2 */
+  max-width: 820px;  /* Larghezza massima */
+  padding: 0 24px;  /* Padding laterale responsive */
+}
+.hero-label {  /* Etichetta hero con effetto glitch */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.7rem;  /* Font piccolo */
+  letter-spacing: 5px;  /* Spaziatura ampia */
+  color: var(--glitch-cyan);  /* Colore ciano glitch */
+  text-transform: uppercase;  /* Maiuscolo */
+  margin-bottom: 24px;  /* Margine inferiore */
+  opacity: 0;  /* Inizialmente invisibile (attivato da JS) */
+}
+.hero-label.glitch-in {  /* Classe attivata da JS per animazione ingresso */
+  animation: labelGlitchIn 0.8s steps(1) forwards;  /* Animazione glitch 0.8s */
+}
+
+/* ── HERO TITLE GLITCH ── */
+.hero-title {  /* Titolo principale hero */
+  font-family: 'Cinzel Decorative', serif;  /* Font decorativo */
+  font-size: clamp(2.4rem, 6vw, 4.2rem);  /* Dimensione responsive */
+  line-height: 1.15;  /* Interlinea stretta */
+  color: var(--parchment);  /* Colore pergamena */
+  margin-bottom: 12px;  /* Margine inferiore */
+  opacity: 0;  /* Inizialmente invisibile */
+  position: relative;  /* Per posizionare pseudo-elementi glitch */
+}
+.hero-title span { color: var(--gold); }  /* Span nel titolo: colore oro per enfasi */
+
+.hero-title.glitch-in {  /* Animazione rivelazione titolo */
+  animation: titleReveal 0.1s steps(1) forwards;  /* Rivelazione rapida */
+}
+
+/* pseudo-elements per effetto RGB-split */
+.hero-title.glitch-active {  /* Stato glitch attivo sul titolo */
+  animation: glitchLoop 4s infinite;  /* Loop glitch infinito ogni 4s */
+}
+.hero-title.glitch-active::before,
+.hero-title.glitch-active::after {  /* Pseudo-elementi per effetto RGB split */
+  content: attr(data-text);  /* Ripete il testo del titolo */
+  position: absolute;  /* Sovrapposizione */
+  top: 0; left: 0; right: 0;  /* Copre tutto il titolo */
+  overflow: hidden;  /* Nasconde parti fuori clip-path */
+  font-family: inherit;  /* Eredita il font */
+  font-size: inherit;  /* Eredita la dimensione */
+  line-height: inherit;  /* Eredita l'interlinea */
+}
+.hero-title.glitch-active::before {  /* Parte superiore (ciano) */
+  color: var(--glitch-cyan);  /* Colore ciano */
+  animation: glitchTop 4s infinite;  /* Animazione glitch superiore */
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);  /* Mostra solo metà superiore */
+  transform: translate(-3px, 0);  /* Spostamento a sinistra */
+}
+.hero-title.glitch-active::after {  /* Parte inferiore (magenta) */
+  color: var(--glitch-magenta);  /* Colore magenta */
+  animation: glitchBot 4s infinite;  /* Animazione glitch inferiore */
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);  /* Mostra solo metà inferiore */
+  transform: translate(3px, 0);  /* Spostamento a destra */
+}
+
+.hero-subtitle {  /* Sottotitolo hero in corsivo */
+  font-family: 'EB Garamond', serif;  /* Font serif */
+  font-style: italic;  /* Stile corsivo */
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);  /* Dimensione responsive */
+  color: var(--text-muted);  /* Colore attenuato */
+  margin-bottom: 48px;  /* Margine inferiore */
+  opacity: 0;  /* Inizialmente invisibile */
+}
+.hero-subtitle.glitch-in {  /* Animazione fade-up del sottotitolo */
+  animation: fadeUp 0.6s ease forwards;  /* Fade-up con easing */
+}
+
+.hero-divider {  /* Linea divisoria con glow ciano */
+  width: 80px; height: 1px;  /* 80x1px */
+  background: var(--glitch-cyan);  /* Colore ciano */
+  margin: 0 auto 48px;  /* Centrata con margine inferiore */
+  opacity: 0;  /* Inizialmente invisibile */
+  box-shadow: 0 0 8px var(--glitch-cyan);  /* Effetto glow ciano */
+}
+.hero-divider.glitch-in {  /* Animazione espansione divisore */
+  animation: dividerExpand 0.5s ease forwards;  /* Espansione 0.5s */
+}
+
+/* ── SCAN LINES overlay sulla hero ── */
+.hero-scanlines {  /* Overlay scanline effetto CRT/retro */
+  position: absolute;  /* Copre tutta la hero */
+  inset: 0;  /* Tutti i lati a zero */
+  background: repeating-linear-gradient(  /* Pattern di righe ripetute */
+    to bottom,  /* Direzione verticale */
+    transparent 0px,  /* Trasparente */
+    transparent 3px,  /* Trasparente per 3px */
+    rgba(0,0,0,0.18) 3px,  /* Linea scura */
+    rgba(0,0,0,0.18) 4px  /* Linea scura per 1px (totale 4px) */
+  );
+  pointer-events: none;  /* Non intercetta click */
+  z-index: 3;  /* Livello 3 */
+  opacity: 0.5;  /* Trasparenza 50% */
+  animation: scanMove 8s linear infinite;  /* Scorrimento verticale infinito */
+}
+
+/* ── NOISE BURST sull'intera hero all'entrata ── */
+.hero-noise {  /* Overlay burst rumore all'ingresso */
+  position: absolute;  /* Copre tutta la hero */
+  inset: 0;  /* Tutti i lati a zero */
+  z-index: 4;  /* Livello 4 (sopra scanline) */
+  pointer-events: none;  /* Non cliccabile */
+  opacity: 0;  /* Inizialmente invisibile */
+}
+.hero-noise.active {  /* Stato attivo del burst (aggiunto da JS) */
+  animation: noiseBurst 1.2s steps(1) forwards;  /* Burst 1.2s poi fermo */
+}
+
+/* ── CORNER BRACKETS decorativi ── */
+.corner {  /* Angoli decorativi ciani agli angoli della hero */
+  position: absolute;  /* Posizionamento assoluto */
+  width: 40px; height: 40px;  /* 40x40px */
+  z-index: 5;  /* Livello 5 */
+  opacity: 0;  /* Inizialmente invisibili */
+  transition: opacity 0.3s;  /* Transizione opacità */
+}
+.corner.visible { opacity: 1; }  /* Stato visibile (aggiunto da JS) */
+.corner-tl { top: 32px; left: 32px; border-top: 2px solid var(--glitch-cyan); border-left: 2px solid var(--glitch-cyan); }  /* Angolo top-left: bordi superiore e sinistro ciani */
+.corner-tr { top: 32px; right: 32px; border-top: 2px solid var(--glitch-cyan); border-right: 2px solid var(--glitch-cyan); }  /* Angolo top-right: bordi superiore e destro ciani */
+.corner-bl { bottom: 80px; left: 32px; border-bottom: 2px solid var(--glitch-cyan); border-left: 2px solid var(--glitch-cyan); }  /* Angolo bottom-left: bordi inferiore e sinistro ciani */
+.corner-br { bottom: 80px; right: 32px; border-bottom: 2px solid var(--glitch-cyan); border-right: 2px solid var(--glitch-cyan); }  /* Angolo bottom-right: bordi inferiore e destro ciani */
+
+/* ── GLITCH KEYFRAMES ── */
+@keyframes labelGlitchIn {  /* Animazione glitch ingresso etichetta */
+  0%   { opacity:0; color: var(--glitch-yellow); transform: skewX(20deg) translateX(-10px); filter: blur(4px); }  /* Inizio: invisibile, giallo, inclinato, sfocato */
+  20%  { opacity:1; color: var(--glitch-magenta); transform: skewX(-10deg) translateX(6px);  filter: blur(0); }  /* Visibile, magenta, inclinazione opposta, nitido */
+  40%  { color: var(--glitch-cyan);    transform: skewX(5deg)  translateX(-3px); }  /* Ciano, inclinazione ridotta */
+  60%  { color: var(--glitch-yellow);  transform: skewX(-2deg) translateX(2px); }  /* Giallo, quasi dritto */
+  80%  { color: var(--glitch-cyan);    transform: skewX(0)     translateX(0); }  /* Ciano, posizione normale */
+  100% { opacity:1; color: var(--glitch-cyan); transform: none; }  /* Finale: visibile, ciano, normale */
+}
+
+@keyframes titleReveal {  /* Rivelazione istantanea del titolo */
+  0%   { opacity: 0; }  /* Inizio invisibile */
+  100% { opacity: 1; }  /* Fine visibile */
+}
+
+@keyframes glitchLoop {  /* Loop glitch periodico sul titolo */
+  0%, 90%, 100% { transform: none; filter: none; }  /* Stato normale (90% del tempo) */
+  91%  { transform: skewX(2deg); filter: brightness(1.4); }  /* Inclinazione + luminosità */
+  92%  { transform: skewX(-3deg) translateX(4px); }  /* Inclinazione opposta + spostamento */
+  93%  { transform: none; }  /* Ritorno normale */
+  95%  { transform: translateX(-3px); filter: hue-rotate(90deg) brightness(1.3); }  /* Spostamento + rotazione colore */
+  96%  { transform: translateX(3px); }  /* Spostamento opposto */
+  97%  { transform: none; filter: none; }  /* Ritorno normale */
+}
+
+@keyframes glitchTop {  /* Glitch parte superiore (ciano) */
+  0%, 90%, 100% { transform: translate(-3px, 0); opacity: 0.7; }  /* Stato base */
+  91% { transform: translate(6px, -2px);  clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%); }  /* Spostamento + nuova area visibile */
+  92% { transform: translate(-6px, 0);    clip-path: polygon(0 10%, 100% 10%, 100% 50%, 0 50%); }  /* Spostamento opposto + area diversa */
+  93% { transform: translate(3px, 1px);   clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%); }  /* Spostamento + area originale */
+  95% { transform: translate(-3px, 0); opacity: 0; }  /* Scompare momentaneamente */
+  96% { transform: translate(-3px, 0); opacity: 0.7; }  /* Ritorna visibile */
+}
+
+@keyframes glitchBot {  /* Glitch parte inferiore (magenta) */
+  0%, 90%, 100% { transform: translate(3px, 0); opacity: 0.7; }  /* Stato base */
+  91% { transform: translate(-6px, 2px);  clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%); }  /* Spostamento opposto + area inferiore */
+  92% { transform: translate(6px, 0);     clip-path: polygon(0 55%, 100% 55%, 100% 90%, 0 90%); }  /* Spostamento + area diversa */
+  93% { transform: translate(-2px, -1px); clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%); }  /* Spostamento + area originale */
+  95% { transform: translate(3px, 0); opacity: 0; }  /* Scompare momentaneamente */
+  96% { transform: translate(3px, 0); opacity: 0.7; }  /* Ritorna visibile */
+}
+
+@keyframes dividerExpand {  /* Animazione espansione linea divisoria */
+  0%   { opacity:0; width: 0; box-shadow: none; }  /* Inizio: invisibile, larghezza zero, nessun glow */
+  60%  { opacity:1; width: 120px; box-shadow: 0 0 16px var(--glitch-cyan), 0 0 4px var(--glitch-magenta); }  /* Espansione a 120px con glow doppio */
+  100% { opacity:1; width: 80px;  box-shadow: 0 0 8px var(--glitch-cyan); }  /* Ritiro a 80px con glow singolo */
+}
+
+@keyframes noiseBurst {  /* Burst di rumore glitch all'ingresso */
+  0%   { opacity:0.9; background: repeating-linear-gradient(90deg, rgba(0,255,229,0.15) 0px, transparent 2px, rgba(255,0,60,0.1) 4px); }  /* Quasi opaco, righe verticali ciano/magenta */
+  15%  { opacity:0.6; background: repeating-linear-gradient(0deg,  rgba(255,230,0,0.12) 0px, transparent 3px); }  /* Righe orizzontali gialle */
+  30%  { opacity:0.8; background: repeating-linear-gradient(45deg, rgba(0,255,229,0.08) 0px, transparent 4px); }  /* Righe diagonali ciano */
+  60%  { opacity:0.3; }  /* Svanisce parzialmente */
+  100% { opacity:0; }  /* Scompare completamente */
+}
+
+@keyframes scanMove {  /* Scorrimento scanline */
+  from { background-position: 0 0; }  /* Inizio posizione */
+  to   { background-position: 0 100px; }  /* Fine posizione (scorrimento verticale di 100px) */
+}
+
+/* CTA Buttons */
+.btn-gold {  /* Bottone con sfondo oro */
+  display: inline-block;  /* Elemento inline ma con proprietà blocco */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.75rem;  /* Font piccolo */
+  letter-spacing: 3px;  /* Spaziatura lettere */
+  text-transform: uppercase;  /* Maiuscolo */
+  color: var(--dark-bg);  /* Testo scuro su sfondo chiaro */
+  background: var(--gold);  /* Sfondo oro */
+  padding: 14px 40px;  /* Padding generoso */
+  text-decoration: none;  /* Nessuna sottolineatura */
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;  /* Transizioni multiple */
+  opacity: 0;  /* Inizialmente invisibile */
+}
+.btn-gold.glitch-in { animation: fadeUp 0.5s ease forwards; }  /* Animazione ingresso fade-up */
+.btn-gold:hover {  /* Stato hover bottone oro */
+  background: var(--gold-light);  /* Sfondo oro chiaro */
+  transform: translateY(-2px);  /* Sollevamento di 2px */
+  color: var(--dark-bg);  /* Mantiene testo scuro */
+  box-shadow: 0 0 18px rgba(201,168,76,0.5), 0 0 4px var(--glitch-cyan);  /* Glow oro + ciano */
+}
+
+.btn-ghost {  /* Bottone trasparente con bordo ciano */
+  display: inline-block;  /* Elemento inline con proprietà blocco */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.75rem;  /* Font piccolo */
+  letter-spacing: 3px;  /* Spaziatura */
+  text-transform: uppercase;  /* Maiuscolo */
+  color: var(--glitch-cyan);  /* Testo ciano */
+  border: 1px solid var(--glitch-cyan);  /* Bordo ciano 1px */
+  padding: 14px 40px;  /* Padding generoso */
+  text-decoration: none;  /* Nessuna sottolineatura */
+  margin-left: 16px;  /* Margine sinistro dal bottone oro */
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;  /* Transizioni */
+  opacity: 0;  /* Inizialmente invisibile */
+  box-shadow: 0 0 6px rgba(0,255,229,0.2);  /* Glow ciano tenue */
+}
+.btn-ghost.glitch-in { animation: fadeUp 0.5s ease forwards; }  /* Animazione ingresso */
+.btn-ghost:hover {  /* Stato hover bottone ghost */
+  background: rgba(0,255,229,0.08);  /* Sfondo ciano trasparente */
+  color: var(--glitch-cyan);  /* Mantiene colore ciano */
+  box-shadow: 0 0 16px rgba(0,255,229,0.4), inset 0 0 8px rgba(0,255,229,0.1);  /* Glow esterno + interno */
+}
+
+.scroll-hint {  /* Indicatore "scorri giù" in fondo alla hero */
+  position: absolute;  /* Posizionamento assoluto */
+  bottom: 32px; left: 50%;  /* 32px dal fondo, al centro */
+  transform: translateX(-50%);  /* Centratura precisa orizzontale */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.6rem;  /* Font molto piccolo */
+  letter-spacing: 3px;  /* Spaziatura */
+  color: var(--text-muted);  /* Colore attenuato */
+  text-transform: uppercase;  /* Maiuscolo */
+  opacity: 0;  /* Inizialmente invisibile */
+  animation: fadeUp 1s ease forwards 1.8s;  /* Appare dopo 1.8s di delay */
+}
+.scroll-hint::after {  /* Linea verticale sotto il testo "scorri" */
+  content: '';  /* Pseudo-elemento vuoto */
+  display: block;  /* A capo */
+  width: 1px; height: 40px;  /* 1x40px */
+  background: var(--gold);  /* Colore oro */
+  margin: 10px auto 0;  /* Centrata con margine superiore */
+  animation: scrollLine 2s ease infinite;  /* Animazione infinita */
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {  /* Animazione fade-up generica */
+  from { opacity: 0; transform: translateY(24px); }  /* Inizio: invisibile, spostato giù di 24px */
+  to   { opacity: 1; transform: translateY(0); }  /* Fine: visibile, posizione normale */
+}
+@keyframes scrollLine {  /* Animazione linea scroll */
+  0%   { transform: scaleY(0); transform-origin: top; }  /* Inizio scala zero dall'alto */
+  50%  { transform: scaleY(1); transform-origin: top; }  /* Metà: scala piena dall'alto */
+  51%  { transform: scaleY(1); transform-origin: bottom; }  /* Cambio origine al fondo */
+  100% { transform: scaleY(0); transform-origin: bottom; }  /* Fine: scala zero verso il basso */
+}
+
+/* Reveal on scroll */
+.reveal {  /* Classe per animazione al scroll (IntersectionObserver) */
+  opacity: 0;  /* Inizialmente invisibile */
+  transform: translateY(30px);  /* Spostato giù di 30px */
+  transition: opacity 0.7s ease, transform 0.7s ease;  /* Transizione opacità + posizione */
+}
+.reveal.visible {  /* Stato visibile dopo scroll (classe aggiunta da JS) */
+  opacity: 1;  /* Visibile */
+  transform: translateY(0);  /* Posizione normale */
+}
+
+/* ─── INTRO SECTION ─── */
+.intro-section {  /* Sezione introduttiva */
+  position: relative;  /* Per posizionamento anno decorativo */
+  z-index: 1;  /* Sopra overlay */
+  padding: 120px 0 80px;  /* Padding verticale generoso */
+}
+.intro-year {  /* Anno decorativo enorme (es. 1492) sullo sfondo */
+  font-family: 'Cinzel Decorative', serif;  /* Font decorativo */
+  font-size: clamp(5rem, 15vw, 10rem);  /* Dimensione enorme responsive */
+  color: rgba(201,168,76,0.05);  /* Oro quasi invisibile (solo decorativo) */
+  position: absolute;  /* Posizionamento assoluto */
+  top: 60px; right: -20px;  /* In alto a destra, leggermente fuori */
+  line-height: 1;  /* Nessuna interlinea extra */
+  pointer-events: none;  /* Non cliccabile */
+  user-select: none;  /* Non selezionabile */
+}
+.protagonists-grid {  /* Griglia protagonisti */
+  border: 1px solid rgba(201,168,76,0.2);  /* Bordo dorato trasparente */
+  padding: 40px;  /* Padding interno */
+  text-align: center;  /* Testo centrato */
+}
+.protagonists-label {  /* Etichetta griglia protagonisti */
+  font-family: 'Cinzel Decorative', serif;  /* Font decorativo */
+  font-size: 0.8rem;  /* Font piccolo */
+  color: var(--gold);  /* Colore oro */
+  letter-spacing: 3px;  /* Spaziatura */
+  display: block;  /* Elemento blocco */
+  margin-bottom: 24px;  /* Margine inferiore */
+}
+.prot-cell {  /* Cella singolo protagonista */
+  padding: 20px;  /* Padding */
+  border: 1px solid rgba(201,168,76,0.1);  /* Bordo dorato molto trasparente */
+}
+.prot-cell .icon { font-size: 2rem; margin-bottom: 8px; }  /* Icona protagonista: grande, margine sotto */
+.prot-cell .name {  /* Nome protagonista */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.8rem;  /* Font piccolo */
+  color: var(--parchment);  /* Colore pergamena */
+}
+
+/* ─── STATS ─── */
+.stats-section {  /* Sezione statistiche numeriche */
+  position: relative;  /* Per z-index */
+  z-index: 1;  /* Sopra overlay */
+  padding: 80px 0;  /* Padding verticale */
+  border-top: 1px solid rgba(201,168,76,0.12);  /* Bordo superiore dorato */
+  border-bottom: 1px solid rgba(201,168,76,0.12);  /* Bordo inferiore dorato */
+}
+.stat-item { text-align: center; padding: 20px; }  /* Singola statistica: centrata, padding */
+.stat-number {  /* Numero grande della statistica */
+  font-family: 'Cinzel Decorative', serif;  /* Font decorativo */
+  font-size: clamp(2.2rem, 5vw, 3.5rem);  /* Dimensione responsive grande */
+  color: var(--gold);  /* Colore oro */
+  display: block;  /* A capo */
+}
+.stat-label {  /* Etichetta sotto il numero */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.65rem;  /* Font piccolo */
+  letter-spacing: 3px;  /* Spaziatura */
+  color: var(--text-muted);  /* Colore attenuato */
+  text-transform: uppercase;  /* Maiuscolo */
+  margin-top: 8px;  /* Margine superiore */
+}
+
+/* ─── EXPLORER CARDS ─── */
+.cards-section {  /* Sezione carte esploratori */
+  position: relative;  /* Per z-index */
+  z-index: 1;  /* Sopra overlay */
+  padding: 100px 0;  /* Padding verticale */
+}
+.explorer-card {  /* Carta singolo esploratore */
+  background: var(--dark-card);  /* Sfondo scuro card */
+  border: 1px solid rgba(201,168,76,0.15);  /* Bordo dorato trasparente */
+  padding: 40px 32px;  /* Padding interno */
+  height: 100%;  /* Altezza piena della colonna Bootstrap */
+  transition: border-color 0.4s, transform 0.4s;  /* Transizione bordo e spostamento */
+  position: relative;  /* Per pseudo-elemento ::before */
+  overflow: hidden;  /* Nasconde overflow */
+}
+.explorer-card::before {  /* Linea dorata sopra la card (invisibile di default) */
+  content: '';  /* Pseudo-elemento vuoto */
+  position: absolute;  /* Posizionamento assoluto */
+  top: 0; left: 0; right: 0;  /* In alto, larghezza piena */
+  height: 2px;  /* Altezza 2px */
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);  /* Gradiente oro al centro */
+  transform: scaleX(0);  /* Inizialmente invisibile (scala zero orizzontale) */
+  transition: transform 0.5s;  /* Transizione scala */
+}
+.explorer-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-6px); }  /* Hover: bordo più visibile, sollevamento 6px */
+.explorer-card:hover::before { transform: scaleX(1); }  /* Hover: linea dorata visibile (scala piena) */
+.card-icon { font-size: 2rem; margin-bottom: 20px; display: block; }  /* Icona carta: grande, margine, a capo */
+.card-year {  /* Anno dell'esplorazione */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.65rem;  /* Font piccolo */
+  letter-spacing: 3px;  /* Spaziatura */
+  color: var(--gold);  /* Colore oro */
+  margin-bottom: 16px;  /* Margine inferiore */
+  display: block;  /* A capo */
+}
+.card-name {  /* Nome dell'esploratore */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 1.3rem;  /* Font medio-grande */
+  color: var(--parchment);  /* Colore pergamena */
+  margin-bottom: 12px;  /* Margine inferiore */
+}
+.card-text {  /* Descrizione dell'esploratore */
+  font-size: 0.95rem;  /* Font leggermente più piccolo */
+  color: var(--text-muted);  /* Colore attenuato */
+  line-height: 1.8;  /* Interlinea */
+  margin-bottom: 24px;  /* Margine inferiore */
+}
+.card-link {  /* Link "scopri di più" della card */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.65rem;  /* Font piccolo */
+  letter-spacing: 2px;  /* Spaziatura */
+  color: var(--gold);  /* Colore oro */
+  text-decoration: none;  /* Nessuna sottolineatura */
+  text-transform: uppercase;  /* Maiuscolo */
+  border-bottom: 1px solid rgba(201,168,76,0.4);  /* Sottolineatura dorata */
+  padding-bottom: 2px;  /* Spazio sotto il testo */
+  transition: color 0.3s;  /* Transizione colore */
+}
+.card-link:hover { color: var(--gold-light); }  /* Hover: colore oro chiaro */
+
+/* ─── TIMELINE ─── */
+.timeline-section {  /* Sezione timeline cronologica */
+  position: relative;  /* Per z-index */
+  z-index: 1;  /* Sopra overlay */
+  padding: 100px 0;  /* Padding verticale */
+  background: linear-gradient(180deg, transparent, rgba(122,28,28,0.08), transparent);  /* Gradiente rosso tenue al centro */
+}
+.timeline-item {  /* Singolo elemento della timeline */
+  display: flex;  /* Layout flex orizzontale */
+  gap: 32px;  /* Spazio tra data e testo */
+  align-items: flex-start;  /* Allineamento in alto */
+  margin-bottom: 48px;  /* Margine tra elementi */
+  opacity: 0;  /* Inizialmente invisibile */
+  transform: translateX(-20px);  /* Spostato a sinistra */
+  transition: opacity 0.6s, transform 0.6s;  /* Transizione apparizione */
+}
+.timeline-item.visible { opacity: 1; transform: translateX(0); }  /* Stato visibile (classe JS): normale */
+.timeline-date {  /* Data dell'evento */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.8rem;  /* Font piccolo */
+  color: var(--gold);  /* Colore oro */
+  letter-spacing: 2px;  /* Spaziatura */
+  min-width: 70px;  /* Larghezza minima fissa */
+  padding-top: 4px;  /* Padding superiore per allineamento visivo */
+}
+.timeline-dot {  /* Pallino indicatore timeline */
+  width: 10px; height: 10px;  /* 10x10px */
+  border: 2px solid var(--gold);  /* Bordo dorato */
+  border-radius: 50%;  /* Circolare */
+  margin-top: 6px;  /* Margine superiore per allineamento */
+  flex-shrink: 0;  /* Non si restringe */
+  position: relative;  /* Per linea connettore */
+}
+.timeline-dot::after {  /* Linea verticale connettore verso il prossimo evento */
+  content: '';  /* Pseudo-elemento vuoto */
+  position: absolute;  /* Posizionamento assoluto */
+  top: 18px; left: 50%;  /* Sotto il pallino, al centro */
+  transform: translateX(-50%);  /* Centratura precisa */
+  width: 1px; height: 56px;  /* 1x56px */
+  background: rgba(201,168,76,0.2);  /* Dorato molto trasparente */
+}
+.timeline-item:last-child .timeline-dot::after { display: none; }  /* Ultimo elemento: nessuna linea connettore */
+.timeline-text h4 {  /* Titolo evento timeline */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 1rem;  /* Font normale */
+  color: var(--parchment);  /* Colore pergamena */
+  margin-bottom: 6px;  /* Margine inferiore */
+}
+.timeline-text p {  /* Descrizione evento timeline */
+  font-size: 0.9rem;  /* Font leggermente più piccolo */
+  color: var(--text-muted);  /* Colore attenuato */
+  line-height: 1.8;  /* Interlinea ampia */
+}
+.link-gold {  /* Link dorato generico */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.7rem;  /* Font piccolo */
+  letter-spacing: 2px;  /* Spaziatura */
+  color: var(--gold);  /* Colore oro */
+  text-decoration: none;  /* Nessuna sottolineatura */
+  text-transform: uppercase;  /* Maiuscolo */
+  border-bottom: 1px solid rgba(201,168,76,0.4);  /* Sottolineatura dorata */
+  padding-bottom: 2px;  /* Spazio sotto */
+}
+.link-gold:hover { color: var(--gold-light); }  /* Hover: colore oro chiaro */
+
+/* ─── QUOTE ─── */
+.quote-section {  /* Sezione citazione */
+  position: relative;  /* Per z-index */
+  z-index: 1;  /* Sopra overlay */
+  padding: 100px 0;  /* Padding verticale */
+  text-align: center;  /* Centrata */
+}
+.quote-mark {  /* Virgolette decorative grandi */
+  font-family: 'Cinzel Decorative', serif;  /* Font decorativo */
+  font-size: 6rem;  /* Enorme */
+  color: rgba(201,168,76,0.1);  /* Oro molto trasparente */
+  line-height: 0.5;  /* Interlinea stretta */
+  display: block;  /* A capo */
+  margin-bottom: 24px;  /* Margine inferiore */
+}
+.big-quote {  /* Testo della citazione */
+  font-family: 'EB Garamond', serif;  /* Font serif elegante */
+  font-style: italic;  /* Corsivo */
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);  /* Dimensione responsive */
+  color: var(--parchment);  /* Colore pergamena */
+  line-height: 1.6;  /* Interlinea */
+  max-width: 780px;  /* Larghezza massima per leggibilità */
+  margin: 0 auto 24px;  /* Centrata con margine inferiore */
+}
+.quote-source {  /* Fonte/autore della citazione */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.7rem;  /* Font piccolo */
+  letter-spacing: 3px;  /* Spaziatura */
+  color: var(--gold);  /* Colore oro */
+  text-transform: uppercase;  /* Maiuscolo */
+}
+
+/* ─── FOOTER ─── */
+footer {  /* Footer del sito */
+  position: relative;  /* Per z-index */
+  z-index: 1;  /* Sopra overlay */
+  padding: 60px 0 32px;  /* Padding */
+  border-top: 1px solid rgba(201,168,76,0.15);  /* Bordo superiore dorato */
+}
+.footer-logo {  /* Logo nel footer */
+  font-family: 'Cinzel Decorative', serif;  /* Font decorativo */
+  font-size: 1.4rem;  /* Font grande */
+  color: var(--gold);  /* Colore oro */
+  margin-bottom: 12px;  /* Margine inferiore */
+}
+.footer-desc {  /* Descrizione/footer text */
+  font-size: 0.9rem;  /* Font normale */
+  color: var(--text-muted);  /* Colore attenuato */
+  line-height: 1.8;  /* Interlinea */
+  max-width: 300px;  /* Larghezza massima */
+}
+.footer-heading {  /* Titolo colonna footer */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.65rem;  /* Font piccolo */
+  letter-spacing: 3px;  /* Spaziatura */
+  color: var(--gold);  /* Colore oro */
+  text-transform: uppercase;  /* Maiuscolo */
+  margin-bottom: 20px;  /* Margine inferiore */
+}
+.footer-links { list-style: none; }  /* Lista link footer: nessun punto elenco */
+.footer-links li { margin-bottom: 10px; }  /* Spazio tra link */
+.footer-links a {  /* Link footer */
+  font-size: 0.9rem;  /* Font normale */
+  color: var(--text-muted);  /* Colore attenuato */
+  text-decoration: none;  /* Nessuna sottolineatura */
+  transition: color 0.3s;  /* Transizione colore */
+}
+.footer-links a:hover { color: var(--gold); }  /* Hover: colore oro */
+.footer-bottom {  /* Parte inferiore footer (copyright + nomi) */
+  margin-top: 48px;  /* Margine superiore */
+  padding-top: 24px;  /* Padding superiore */
+  border-top: 1px solid rgba(201,168,76,0.08);  /* Bordo sottile */
+  display: flex;  /* Layout flex */
+  justify-content: space-between;  /* Ai lati opposti */
+  align-items: center;  /* Centrato verticalmente */
+  flex-wrap: wrap;  /* A capo se necessario */
+  gap: 12px;  /* Spazio tra elementi */
+}
+.footer-bottom p { font-size: 0.8rem; color: rgba(160,128,80,0.5); }  /* Testo copyright: piccolo, molto attenuato */
+.group-names {  /* Nomi del gruppo scolastico */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.65rem;  /* Font piccolo */
+  letter-spacing: 2px;  /* Spaziatura */
+  color: rgba(160,128,80,0.5);  /* Colore molto attenuato */
+}
+
+/* ─── BACK TO TOP ─── */
+#backToTop {  /* Bottone torna in cima alla pagina */
+  position: fixed;  /* Fisso */
+  bottom: 32px; right: 32px;  /* 32px dal fondo e da destra */
+  width: 44px; height: 44px;  /* 44x44px */
+  background: var(--gold);  /* Sfondo oro */
+  color: var(--dark-bg);  /* Icona scura */
+  border: none;  /* Nessun bordo */
+  cursor: pointer;  /* Cursore a mano */
+  font-size: 1.1rem;  /* Dimensione icona */
+  opacity: 0;  /* Inizialmente invisibile */
+  pointer-events: none;  /* Non cliccabile */
+  transition: opacity 0.3s, transform 0.3s;  /* Transizioni */
+  z-index: 999;  /* Livello alto */
+}
+#backToTop.visible { opacity: 1; pointer-events: all; }  /* Stato visibile (JS): cliccabile */
+#backToTop:hover { transform: translateY(-3px); }  /* Hover: sollevamento */
+
+/* ─── PAGE HEADER (pagine interne) ─── */
+.page-header {  /* Header pagine interne */
+  position: relative;  /* Per posizionamento sfondo */
+  padding: 160px 0 80px;  /* Padding grande */
+  text-align: center;  /* Centrato */
+  overflow: hidden;  /* Nasconde overflow */
+}
+.page-header-bg {  /* Sfondo header interno */
+  position: absolute;  /* Copre tutto */
+  inset: 0;  /* Tutti i lati a zero */
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(122,28,28,0.2) 0%, transparent 70%),  /* Gradiente radiale rosso */
+              linear-gradient(180deg, #0E0A06 0%, #1A0F05 60%, #0E0A06 100%);  /* Gradiente scuro */
+}
+.page-header-content { position: relative; z-index: 2; }  /* Contenuto sopra sfondo */
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 992px) {  /* Tablet e inferiori */
+  .nav-links { gap: 20px; }  /* Riduce spazio tra link navbar */
+}
+
+@media (max-width: 768px) {  /* Mobile */
+  nav { padding: 14px 20px; }  /* Riduce padding navbar */
+  nav.scrolled { padding: 10px 20px; }  /* Padding scroll ridotto */
+  .nav-links {  /* Menu mobile a schermo intero */
+    display: none;  /* Nascosto di default */
+    flex-direction: column;  /* Verticale */
+    position: fixed;  /* Schermo intero */
+    top: 0; left: 0; right: 0; bottom: 0;  /* Copre tutto */
+    background: rgba(14,10,6,0.98);  /* Sfondo quasi opaco */
+    align-items: center;  /* Centrato orizzontale */
+    justify-content: center;  /* Centrato verticale */
+    gap: 32px;  /* Spazio tra link */
+    z-index: 999;  /* Sopra tutto */
+  }
+  .nav-links.open { display: flex; }  /* Classe per aprire menu (JS toggle) */
+  .nav-links a { font-size: 1rem; letter-spacing: 3px; }  /* Font più grande su mobile */
+  .nav-toggle { display: flex; z-index: 1000; }  /* Mostra hamburger, sopra menu */
+  .btn-ghost { margin-left: 0; margin-top: 12px; display: block; text-align: center; }  /* Bottone ghost a capo, centrato */
+  .intro-year { font-size: 5rem; right: -10px; }  /* Anno decorativo più piccolo */
+  .timeline-item { flex-direction: column; gap: 8px; }  /* Timeline verticale su mobile */
+  .timeline-dot::after { display: none; }  /* Nasconde linee connettore */
+  .footer-bottom { flex-direction: column; text-align: center; }  /* Footer verticale */
+  .cards-section .col-md-4 { margin-bottom: 16px; }  /* Margine tra card verticali */
+}
+
+@media (max-width: 480px) {  /* Schermi molto piccoli */
+  .hero-title { font-size: 2rem; }  /* Titolo hero più piccolo */
+  .stat-number { font-size: 2rem; }  /* Numeri statistica più piccoli */
+  .big-quote { font-size: 1.3rem; }  /* Citazione più piccola */
+}
+
+/* ═══════════════════════════════════════
+   MUSIC PLAYER
+   ═══════════════════════════════════════ */
+
+#musicPlayer { /* Contenitore principale del player musicale */
+  position: fixed; /* Il player rimane fisso sullo schermo */
+  bottom: 32px; /* Distanza dal basso */
+  left: 32px; /* Distanza da sinistra */
+  z-index: 998; /* Rimane sopra agli altri elementi */
+  width: 300px; /* Larghezza del player */
+  background: transparent; /* Sfondo completamente trasparente */
+  backdrop-filter: none; /* Nessuna sfocatura */
+ -webkit-backdrop-filter: none; /* Nessuna sfocatura su Safari */
+  border: 1px solid rgba(0,255,229,0.08); /* Bordo ciano molto leggero */
+  box-shadow: 0 0 6px rgba(0,255,229,0.03); /* Glow quasi invisibile */
+  padding: 16px 18px; /* Spazio interno */
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s; /* Animazioni fluide */
+}
+
+#musicPlayer:hover {  /* Hover player */
+  border-color: rgba(0,255,229,0.5);  /* Bordo più visibile */
+  box-shadow: 0 0 32px rgba(0,255,229,0.15), 0 0 8px rgba(255,0,60,0.2);  /* Glow più intenso */
+}
+
+/* angolini decorativi */
+#musicPlayer::before,  /* Angolo decorativo superiore sinistro */
+#musicPlayer::after {  /* Angolo decorativo inferiore destro */
+  content: '';  /* Pseudo-elementi vuoti */
+  position: absolute;  /* Posizionamento assoluto */
+  width: 8px; height: 8px;  /* 8x8px */
+}
+#musicPlayer::before {  /* Angolo top-left ciano */
+  top: -1px; left: -1px;  /* Posizione angolo alto */
+  border-top: 2px solid var(--glitch-cyan);  /* Bordo superiore ciano */
+  border-left: 2px solid var(--glitch-cyan);  /* Bordo sinistro ciano */
+}
+#musicPlayer::after {  /* Angolo bottom-right magenta */
+  bottom: -1px; right: -1px;  /* Posizione angolo basso */
+  border-bottom: 2px solid var(--glitch-magenta);  /* Bordo inferiore magenta */
+  border-right: 2px solid var(--glitch-magenta);  /* Bordo destro magenta */
+}
+
+/* header del player */
+.player-header {  /* Header del player */
+  display: flex;  /* Layout flex */
+  justify-content: space-between;  /* Spazio tra elementi */
+  align-items: center;  /* Centrati verticalmente */
+  margin-bottom: 12px;  /* Margine inferiore */
+}
+.player-label {  /* Etichetta "NOW PLAYING" */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.55rem;  /* Font molto piccolo */
+  letter-spacing: 3px;  /* Spaziatura */
+  color: var(--glitch-cyan);  /* Colore ciano */
+  text-transform: uppercase;  /* Maiuscolo */
+}
+.player-label span {  /* Pallino indicatore stato (lampeggiante) */
+  display: inline-block;  /* Inline ma con dimensioni */
+  width: 6px; height: 6px;  /* 6x6px */
+  background: var(--glitch-cyan);  /* Ciano quando in riproduzione */
+  border-radius: 50%;  /* Circolare */
+  margin-right: 6px;  /* Spazio a destra */
+  animation: playerBlink 1.2s ease infinite;  /* Lampeggio infinito */
+}
+.player-label span.paused {  /* Stato pausa del pallino */
+  background: var(--text-muted);  /* Colore attenuato */
+  animation: none;  /* Nessuna animazione */
+}
+@keyframes playerBlink {  /* Animazione lampeggio pallino */
+  0%, 100% { opacity: 1; }  /* Visibile */
+  50%       { opacity: 0.2; }  /* Quasi invisibile */
+}
+
+/* titolo canzone */
+.player-track {  /* Titolo canzone in riproduzione */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.7rem;  /* Font piccolo */
+  color: var(--parchment);  /* Colore pergamena */
+  letter-spacing: 1px;  /* Spaziatura */
+  margin-bottom: 12px;  /* Margine */
+  white-space: nowrap;  /* Nessun a capo */
+  overflow: hidden;  /* Nasconde overflow */
+  text-overflow: ellipsis;  /* Puntini di sospensione se troppo lungo */
+}
+.player-track-sub {  /* Sottotitolo/artista */
+  font-family: 'EB Garamond', serif;  /* Font serif */
+  font-size: 0.75rem;  /* Font piccolo */
+  color: var(--text-muted);  /* Colore attenuato */
+  margin-bottom: 14px;  /* Margine */
+  font-style: italic;  /* Corsivo */
+}
+
+/* waveform bars */
+.player-wave {  /* Contenitore barre waveform animate */
+  display: flex;  /* Layout orizzontale */
+  align-items: flex-end;  /* Allineate in basso */
+  gap: 3px;  /* Spazio tra barre */
+  height: 28px;  /* Altezza totale */
+  margin-bottom: 14px;  /* Margine */
+}
+.wave-bar {  /* Singola barra waveform */
+  flex: 1;  /* Larghezza uguale tra tutte */
+  background: var(--glitch-cyan);  /* Colore ciano di default */
+  border-radius: 1px;  /* Leggermente arrotondata */
+  opacity: 0.7;  /* Trasparenza */
+  transform-origin: bottom;  /* Scala dal basso verso l'alto */
+  min-height: 3px;  /* Altezza minima */
+}
+.player-playing .wave-bar { animation: waveAnim var(--dur, 0.8s) ease-in-out infinite alternate; }  /* Animazione onda quando in riproduzione */
+.wave-bar:nth-child(1)  { --dur: 0.55s; height: 30%; }  /* Barra 1: durata 0.55s, altezza 30% */
+.wave-bar:nth-child(2)  { --dur: 0.72s; height: 70%; }  /* Barra 2: durata 0.72s, altezza 70% */
+.wave-bar:nth-child(3)  { --dur: 0.48s; height: 45%; }  /* Barra 3: durata 0.48s, altezza 45% */
+.wave-bar:nth-child(4)  { --dur: 0.85s; height: 90%; }  /* Barra 4: durata 0.85s, altezza 90% */
+.wave-bar:nth-child(5)  { --dur: 0.61s; height: 55%; }  /* Barra 5: durata 0.61s, altezza 55% */
+.wave-bar:nth-child(6)  { --dur: 0.77s; height: 100%; }  /* Barra 6: durata 0.77s, altezza 100% */
+.wave-bar:nth-child(7)  { --dur: 0.53s; height: 65%; }  /* Barra 7: durata 0.53s, altezza 65% */
+.wave-bar:nth-child(8)  { --dur: 0.90s; height: 40%; }  /* Barra 8: durata 0.90s, altezza 40% */
+.wave-bar:nth-child(9)  { --dur: 0.66s; height: 75%; }  /* Barra 9: durata 0.66s, altezza 75% */
+.wave-bar:nth-child(10) { --dur: 0.44s; height: 30%; }  /* Barra 10: durata 0.44s, altezza 30% */
+.wave-bar:nth-child(11) { --dur: 0.79s; height: 85%; }  /* Barra 11: durata 0.79s, altezza 85% */
+.wave-bar:nth-child(12) { --dur: 0.58s; height: 50%; }  /* Barra 12: durata 0.58s, altezza 50% */
+.wave-bar:nth-child(odd)  { background: var(--glitch-cyan); }  /* Barre dispari: colore ciano */
+.wave-bar:nth-child(even) { background: var(--glitch-magenta); opacity: 0.5; }  /* Barre pari: colore magenta, più trasparenti */
+
+@keyframes waveAnim {  /* Animazione onda delle barre */
+  from { transform: scaleY(0.2); opacity: 0.4; }  /* Inizio: altezza minima, poco visibile */
+  to   { transform: scaleY(1);   opacity: 0.9; }  /* Fine: altezza massima, molto visibile */
+}
+
+/* progress bar */
+.player-progress-wrap {  /* Contenitore barra progresso */
+  position: relative;  /* Per posizionamento thumb */
+  height: 3px;  /* Altezza 3px */
+  background: rgba(255,255,255,0.08);  /* Sfondo quasi invisibile */
+  margin-bottom: 14px;  /* Margine */
+  cursor: pointer;  /* Cliccabile per seek */
+}
+.player-progress-wrap:hover { height: 5px; margin-bottom: 12px; }  /* Hover: si ingrossa, compensa margine */
+.player-progress-fill {  /* Riempimento barra progresso (parte colorata) */
+  height: 100%;  /* Altezza piena del contenitore */
+  width: 0%;  /* Inizialmente zero (aggiornato da JS) */
+  background: linear-gradient(90deg, var(--glitch-cyan), var(--glitch-magenta));  /* Gradiente ciano→magenta */
+  transition: width 0.25s linear;  /* Aggiornamento fluido */
+  position: relative;  /* Per thumb */
+}
+.player-progress-fill::after {  /* Thumb/pallino sulla barra progresso */
+  content: '';  /* Pseudo-elemento vuoto */
+  position: absolute;  /* Posizionamento assoluto */
+  right: -4px; top: 50%;  /* A destra della barra, al centro verticale */
+  transform: translateY(-50%);  /* Centratura verticale precisa */
+  width: 8px; height: 8px;  /* 8x8px */
+  background: var(--glitch-cyan);  /* Ciano */
+  border-radius: 50%;  /* Circolare */
+  box-shadow: 0 0 6px var(--glitch-cyan);  /* Glow */
+  opacity: 0;  /* Inizialmente invisibile */
+  transition: opacity 0.2s;  /* Transizione */
+}
+.player-progress-wrap:hover .player-progress-fill::after { opacity: 1; }  /* Thumb visibile in hover */
+
+/* time */
+.player-time {  /* Tempo corrente / totale */
+  display: flex;  /* Layout flex */
+  justify-content: space-between;  /* Ai lati opposti */
+  font-family: 'Cinzel', serif;  /* Font decorativo */
+  font-size: 0.55rem;  /* Font molto piccolo */
+  color: var(--text-muted);  /* Colore attenuato */
+  letter-spacing: 1px;  /* Spaziatura */
+  margin-bottom: 14px;  /* Margine */
+}
+
+/* controls */
+.player-controls {  /* Controlli play/pause/skip */
+  display: flex;  /* Layout orizzontale */
+  align-items: center;  /* Centrati verticalmente */
+  gap: 12px;  /* Spazio tra bottoni */
+}
+.player-btn {  /* Bottone generico player */
+  background: none;  /* Nessuno sfondo */
+  border: 1px solid rgba(0,255,229,0.2);  /* Bordo ciano trasparente */
+  color: var(--glitch-cyan);  /* Icona ciana */
+  width: 36px; height: 36px;  /* 36x36px */
+  cursor: pointer;  /* Cursore a mano */
+  font-size: 0.9rem;  /* Dimensione icona */
+  display: flex;  /* Centratura flex */
+  align-items: center;  /* Centrato verticale */
+  justify-content: center;  /* Centrato orizzontale */
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;  /* Transizioni rapide */
+  flex-shrink: 0;  /* Non si restringe */
+}
+.player-btn:hover {  /* Hover bottone player */
+  background: rgba(0,255,229,0.1);  /* Sfondo ciano trasparente */
+  border-color: var(--glitch-cyan);  /* Bordo pieno ciano */
+  box-shadow: 0 0 10px rgba(0,255,229,0.3);  /* Glow ciano */
+}
+.player-btn.play-btn {  /* Bottone play principale (più grande) */
+   width: 44px; height: 44px;  /* Dimensioni aumentate: 44x44px per il bottone play principale */
+  font-size: 1.1rem;  /* Icona play più grande (1.1rem vs 0.9rem dei bottoni normali) */
+  border-color: rgba(0,255,229,0.4);  /* Bordo ciano più marcato (opacità 40% vs 20%) per enfatizzare il play */
+}
+.player-btn.play-btn:hover {  /* Stato hover del bottone play principale */
+  box-shadow: 0 0 16px rgba(0,255,229,0.4);  /* Glow ciano più intenso al passaggio del mouse */
+}
+
+/* volume */
+.player-volume {  /* Sezione controllo volume: contiene icona e slider */
+  flex: 1;  /* Occupa tutto lo spazio rimanente nella riga dei controlli */
+  display: flex;  /* Layout orizzontale: icona + slider affiancati */
+  align-items: center;  /* Allineamento verticale centrato tra icona e slider */
+  gap: 8px;  /* Spazio di 8px tra l'icona volume e lo slider */
+}
+.player-vol-icon {  /* Icona altoparlante (🔊) a sinistra dello slider */
+  font-size: 0.75rem;  /* Dimensione piccola dell'icona */
+  color: var(--text-muted);  /* Colore attenuato per non distrarre */
+  flex-shrink: 0;  /* L'icona non si restringe mai, mantiene dimensione fissa */
+}
+.volume-slider {  /* Slider/input range per regolare il volume */
+  flex: 1;  /* Occupa tutto lo spazio rimanente dopo l'icona */
+  -webkit-appearance: none;  /* Rimuove lo stile di default del browser WebKit (Chrome, Safari, Edge) */
+  appearance: none;  /* Rimuove lo stile di default standard per tutti i browser */
+  height: 2px;  /* Altezza della barra del slider: sottile linea di 2px */
+  background: rgba(255,255,255,0.1);  /* Sfondo quasi invisibile (bianco al 10%) */
+  outline: none;  /* Nessun bordo di focus visibile (outline blu di default) */
+  cursor: pointer;  /* Cursore a mano per indicare che è cliccabile/draggabile */
+}
+.volume-slider::-webkit-slider-thumb {  /* Stile del "pallino" thumb su browser WebKit (Chrome, Safari, Edge) */
+  -webkit-appearance: none;  /* Rimuove lo stile di default del thumb */
+  width: 10px; height: 10px;  /* Dimensione del thumb: piccolo cerchietto 10x10px */
+  border-radius: 50%;  /* Forma perfettamente circolare */
+  background: var(--glitch-cyan);  /* Colore ciano per coerenza con il tema glitch */
+  box-shadow: 0 0 6px var(--glitch-cyan);  /* Glow ciano attorno al thumb */
+  cursor: pointer;  /* Cursore a mano anche sul thumb */
+}
+.volume-slider::-moz-range-thumb {  /* Stile del thumb su Firefox (prefisso -moz-) */
+  width: 10px; height: 10px;  /* Stesse dimensioni del thumb WebKit */
+  border-radius: 50%;  /* Forma circolare */
+  background: var(--glitch-cyan);  /* Stesso colore ciano */
+  border: none;  /* Nessun bordo di default Firefox */
+  cursor: pointer;  /* Cursore a mano */
+}
+
+/* glitch flash occasionale sul player */
+@keyframes playerGlitch {  /* Animazione glitch che si attiva occasionalmente sul player in riproduzione */
+  0%, 95%, 100% { transform: none; filter: none; }  /* Per il 95% del tempo il player è normale */
+  96% { transform: translateX(2px); filter: hue-rotate(90deg); }  /* Al 96%: sposta a destra di 2px + rotazione tonalità verso il verde */
+  97% { transform: translateX(-2px); filter: hue-rotate(-90deg); }  /* Al 97%: sposta a sinistra di 2px + rotazione tonalità opposta verso il blu */
+  98% { transform: none; filter: none; }  /* Al 98%: torna normale, il glitch dura solo pochi frame */
+}
+#musicPlayer.playing {  /* Quando il player ha la classe "playing" (musica in riproduzione) */
+  animation: playerGlitch 7s infinite;  /* Applica il glitch ogni 7 secondi in loop infinito */
+}
+
+/* responsive */
+@media (max-width: 480px) {  /* Media query per schermi molto piccoli (smartphone) */
+  #musicPlayer { width: calc(100vw - 48px); left: 24px; bottom: 24px; }  /* Player largo quasi tutto lo schermo (viewport - 48px margini), posizionato 24px dai bordi */
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   STILI AGGIUNTI DA esploratori.html
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Page header (header pagine interne) ── */
+.page-header {
+  position: relative;           /* Posizionamento relativo per contenere il bg assoluto */
+  padding: 160px 0 80px;        /* Padding grande: 160px sopra, 80px sotto */
+  text-align: center;           /* Testo centrato */
+  overflow: hidden;             /* Nasconde overflow del gradiente */
+}
+.page-header-bg {
+  position: absolute; inset: 0; /* Copre tutta l'area del page-header */
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(122,28,28,0.2) 0%, transparent 70%),  /* Alone rosso al centro */
+    linear-gradient(180deg, #0E0A06, #1A0F05 60%, #0E0A06);  /* Gradiente scuro verticale */
+}
+.page-header-content { position: relative; z-index: 2; }  /* Contenuto sopra lo sfondo */
+.page-header .gold-line { margin: 0 auto 20px; }  /* Linea dorata centrata */
+
+/* ── Sezione esploratore singolo ── */
+.explorer-section {
+  position: relative; z-index: 1;  /* Sopra l'overlay noise del body */
+  padding: 90px 0;                  /* Padding verticale generoso */
+}
+
+/* ── Sidebar laterale (icona, lista, citazione) ── */
+.explorer-sidebar {
+  border: 1px solid rgba(201,168,76,0.15);  /* Bordo dorato trasparente */
+  padding: 36px 32px;                        /* Padding interno */
+  position: relative;                        /* Per posizionare ::before */
+}
+.explorer-sidebar::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;  /* Linea in alto */
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);  /* Gradiente dorato al centro */
+}
+.sidebar-icon { font-size: 2.5rem; margin-bottom: 16px; display: block; }  /* Icona grande decorativa */
+.sidebar-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem; color: var(--parchment);
+  margin-bottom: 20px;
+}
+.sidebar-list { list-style: none; margin-bottom: 24px; }  /* Lista senza punti */
+.sidebar-list li {
+  font-size: 0.9rem; color: var(--muted);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(201,168,76,0.08);  /* Separatore sottile */
+  display: flex; gap: 12px; align-items: baseline;
+}
+.sidebar-list li:last-child { border-bottom: none; }  /* Ultimo elemento senza bordo */
+.sl-year {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem; color: var(--gold);
+  letter-spacing: 1px; white-space: nowrap;
+  flex-shrink: 0;  /* Non si restringe */
+}
+.sidebar-quote {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 0.95rem; color: var(--muted);
+  border-left: 2px solid var(--gold);  /* Bordo dorato a sinistra */
+  padding-left: 16px; line-height: 1.7;
+}
+
+/* ── Mini statistiche sotto il testo ── */
+.mini-stat {
+  text-align: center;
+  padding: 16px 8px;
+  border: 1px solid rgba(201,168,76,0.1);  /* Bordo dorato molto trasparente */
+}
+.mini-num {
+  display: block;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem; color: var(--gold);
+}
+.mini-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem; letter-spacing: 1px;
+  color: var(--muted); text-transform: uppercase;
+  margin-top: 4px; display: block;
+}
+
+/* ── Divisore tra esploratori ── */
+.explorer-divider {
+  text-align: center;
+  padding: 20px 0;
+  color: rgba(201,168,76,0.25);  /* Oro molto trasparente */
+  font-size: 1.2rem;
+  position: relative;
+}
+.explorer-divider::before, .explorer-divider::after {
+  content: '';
+  position: absolute; top: 50%;
+  width: calc(50% - 40px); height: 1px;  /* Linee ai lati del simbolo */
+  background: rgba(201,168,76,0.1);
+}
+.explorer-divider::before { left: 0; }
+.explorer-divider::after  { right: 0; }
+
+/* ── Accordion personalizzato (Altri protagonisti dell'era) ── */
+.acc-custom {
+  background: var(--dark-card);
+  border: 1px solid rgba(201,168,76,0.1) !important;  /* Bordo dorato, !important per sovrascrivere Bootstrap */
+  margin-bottom: 8px;
+}
+.acc-btn {
+  background: var(--dark-card) !important;
+  color: var(--parchment) !important;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  box-shadow: none !important;  /* Rimuove ombra Bootstrap */
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 12px;
+}
+.acc-btn:not(.collapsed) { color: var(--gold) !important; }  /* Colore oro quando aperto */
+.acc-btn::after { filter: invert(1) sepia(1) saturate(2) hue-rotate(5deg); }  /* Icona freccia bianca/dorata */
+.acc-year {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem; color: var(--muted);
+  letter-spacing: 1px; margin-left: auto;  /* Spinge a destra */
+}
+.acc-body {
+  background: rgba(10,7,3,0.5);  /* Sfondo scuro semi-trasparente */
+  color: #E8D5B5;                /* Colore testo sgargiante (beige chiaro) */
+  font-size: 0.95rem;
+  line-height: 1.8;
+  border-top: 1px solid rgba(201,168,76,0.08);  /* Separatore sottile */
+}
+
+/* ── Responsive esploratori ── */
+@media (max-width: 768px) {
+  .explorer-section { padding: 60px 0; }
+  .explorer-sidebar { margin-top: 32px; }
+}
+
+
+
+/* ═══════════════════════════════════════════════════════════════
+   STILI AGGIUNTI DA timeline.html
+   ═══════════════════════════════════════════════════════════════ */
+
+
+/* ── Timeline items ── */
+.tl-item {
+  display: grid;
+  grid-template-columns: 90px 40px 1fr;  /* 3 colonne: anno | connettore | card */
+  gap: 0 0;
+  margin-bottom: 0;
+  align-items: stretch;
+}
+.tl-year-col {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-right: 0;
+  padding-top: 24px;
+}
+.tl-year-badge {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: var(--text-muted);       /* Colore attenuato per anni normali */
+  white-space: nowrap;
+}
+.tl-year-badge--gold {
+  color: var(--gold);             /* Colore oro per anni importanti */
+  font-weight: 600;
+}
+.tl-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px;
+}
+.tl-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.3);    /* Pallino dorato trasparente */
+  border: 1px solid rgba(201,168,76,0.5);
+  flex-shrink: 0;
+  margin-top: 26px;
+}
+.tl-dot--gold {
+  background: var(--gold);             /* Pallino pieno oro per eventi chiave */
+  box-shadow: 0 0 12px rgba(201,168,76,0.5);  /* Glow dorato */
+  border-color: var(--gold);
+}
+.tl-line {
+  width: 1px;
+  flex: 1;
+  background: rgba(201,168,76,0.1);    /* Linea connettore verticale sottile */
+  min-height: 24px;
+}
+.tl-card {
+  padding: 20px 24px 32px;
+  border: 1px solid rgba(201,168,76,0.08);  /* Bordo molto sottile */
+  margin-bottom: 12px;
+  background: var(--dark-card);
+  transition: border-color 0.3s;
+}
+.tl-card:hover {
+  border-color: rgba(201,168,76,0.2);  /* Bordo più visibile al hover */
+}
+.tl-card--gold {
+  border-color: rgba(201,168,76,0.2);  /* Bordo più marcato per eventi dorati */
+  background: linear-gradient(135deg, rgba(26,18,9,1) 0%, rgba(40,28,8,0.8) 100%);  /* Gradiente caldo */
+}
+.tl-card--gold::before {
+  content: '';
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);  /* Linea dorata in cima */
+  margin: -20px -24px 16px;  /* Fuori dal padding della card */
+}
+.tl-category {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.7;
+  display: block;
+  margin-bottom: 8px;
+}
+.tl-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  color: var(--parchment);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.tl-body {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* Ultimo elemento: nessuna linea connettore dopo */
+.tl-item:last-child .tl-line { display: none; }
+
+/* ── Responsive timeline ── */
+@media (max-width: 576px) {
+  .tl-item {
+    grid-template-columns: 60px 32px 1fr;  /* Colonne più strette su mobile */
+  }
+  .tl-year-badge { font-size: 0.55rem; }
+  .tl-card { padding: 16px; }
+}
+
+
+
+/* ═══════════════════════════════════════════════════════════════
+   STILI AGGIUNTI DA galleria.html
+   ═══════════════════════════════════════════════════════════════ */
+
+
+/* ── Filtri galleria ── */
+.gallery-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;          /* A capo su schermi stretti */
+  margin-bottom: 8px;
+}
+.gf-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted, #A89880);
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.15);  /* Bordo dorato trasparente */
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.gf-btn:hover { color: var(--parchment, #E8D5B0); border-color: rgba(201,168,76,0.4); }
+.gf-btn.active {
+  color: var(--gold, #C9A84C);
+  border-color: var(--gold, #C9A84C);
+  background: rgba(201,168,76,0.05);  /* Sfondo dorato tenue */
+}
+
+/* ── Griglia galleria ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* 3 colonne su desktop */
+  gap: 24px;
+}
+@media (max-width: 992px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }  /* 2 colonne su tablet */
+@media (max-width: 576px)  { .gallery-grid { grid-template-columns: 1fr; } }              /* 1 colonna su mobile */
+
+.gal-item { transition: opacity 0.3s; }  /* Transizione fade per filtro */
+
+.gal-card {
+  border: 1px solid rgba(201,168,76,0.1);
+  background: var(--dark-card, #120C05);
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+.gal-card:hover {
+  border-color: rgba(201,168,76,0.35);  /* Bordo più visibile al hover */
+  transform: translateY(-4px);          /* Sollevamento al hover */
+}
+
+/* ── Immagine reale ── */
+.gal-img-wrap {
+  position: relative;
+  aspect-ratio: 4/3;        /* Proporzione fissa 4:3 */
+  overflow: hidden;
+  background: #0E0A06;      /* Sfondo di caricamento */
+}
+.gal-real-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* Copre tutto il contenitore */
+  object-position: center top;  /* Allinea in alto per mappe/documenti */
+  display: block;
+  filter: sepia(10%) brightness(0.9) contrast(1.05);  /* Filtro vintage */
+  transition: transform 0.5s ease, filter 0.4s ease;
+}
+/* Ritratti: centrare meglio i visi */
+.gal-real-img--portrait {
+  object-position: center 15%;  /* Sposta il focus più in alto per i volti */
+}
+.gal-card:hover .gal-real-img {
+  transform: scale(1.04);       /* Leggero zoom al hover */
+  filter: sepia(0%) brightness(1) contrast(1);  /* Rimuove filtro vintage al hover */
+}
+
+/* ── Overlay hover ── */
+.gal-overlay {
+  position: absolute; inset: 0;
+  background: rgba(14,10,6,0.55);  /* Overlay scuro semi-trasparente */
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.gal-img-wrap:hover .gal-overlay { opacity: 1; }  /* Overlay visibile al hover */
+.gal-zoom {
+  font-size: 2.2rem;
+  color: var(--gold, #C9A84C);
+  opacity: 0.9;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.8);  /* Ombra per leggibilità */
+}
+
+/* ── Info card ── */
+.gal-info { padding: 20px; }
+.gal-cat {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold, #C9A84C);
+  opacity: 0.7;
+  display: block; margin-bottom: 8px;
+}
+.gal-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  color: var(--parchment, #E8D5B0);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.gal-desc {
+  font-size: 0.85rem;
+  color: var(--muted, #A89880);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.gal-year {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  color: rgba(201,168,76,0.5);  /* Anno molto attenuato */
+  letter-spacing: 2px;
+}
+
+/* ── Lightbox ── */
+.lightbox-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(8,5,2,0.95);  /* Sfondo quasi nero */
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  pointer-events: none;           /* Non intercetta click quando chiuso */
+  transition: opacity 0.3s;
+  padding: 24px;
+}
+.lightbox-overlay.active {
+  opacity: 1;
+  pointer-events: all;            /* Intercetta click quando aperto */
+}
+.lightbox-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;            /* Mantiene proporzioni */
+  border: 1px solid rgba(201,168,76,0.2);
+  box-shadow: 0 0 60px rgba(0,0,0,0.8);  /* Ombra profonda */
+}
+.lightbox-caption {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--gold, #C9A84C);
+  text-align: center;
+  margin: 0;
+}
+.lightbox-close {
+  position: fixed;
+  top: 20px; right: 28px;
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold, #C9A84C);
+  font-size: 1.6rem;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  line-height: 1;
+}
+.lightbox-close:hover { background: rgba(201,168,76,0.1); }  /* Sfondo dorato tenue al hover */
+
+/* ── Curiosità ── */
+.curio-card {
+  border: 1px solid rgba(201,168,76,0.1);
+  background: var(--dark-card, #120C05);
+  padding: 28px 24px;
+  height: 100%;                   /* Altezza uniforme nella riga */
+  transition: border-color 0.3s;
+}
+.curio-card:hover { border-color: rgba(201,168,76,0.25); }  /* Bordo più visibile al hover */
+.curio-icon { font-size: 2rem; margin-bottom: 16px; display: block; }  /* Icona decorativa */
+.curio-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  color: var(--parchment, #E8D5B0);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.curio-text {
+  font-size: 0.9rem;
+  color: var(--muted, #A89880);
+  line-height: 1.8;
+  margin: 0;
+}
