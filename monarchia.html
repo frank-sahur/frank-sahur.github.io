@@ -198,7 +198,7 @@
         </div>
         <div class="col-lg-5 offset-lg-1 reveal">
           <div class="explorer-sidebar">
-            <div class="sidebar-icon">&#9855;</div>
+            <div class="sidebar-icon">&#128301;</div>
             <h3 class="sidebar-title">Date fondamentali</h3>
             <ul class="sidebar-list">
               <li><span class="sl-year">711</span> Invasione islamica della penisola iberica</li>
@@ -346,34 +346,38 @@
 
   <!-- MUSIC PLAYER -->
   <div id="musicPlayer">
-    <div class="player-header">
-      <span class="player-label"><span id="playerDot"></span>Now Playing</span>
-    </div>
-    <div class="player-track">Colonna sonora</div>
-    <div class="player-track-sub">Colonna sonora del sito</div>
-    <div class="player-wave" id="playerWave">
-      <div class="wave-bar"></div><div class="wave-bar"></div>
-      <div class="wave-bar"></div><div class="wave-bar"></div>
-      <div class="wave-bar"></div><div class="wave-bar"></div>
-      <div class="wave-bar"></div><div class="wave-bar"></div>
-      <div class="wave-bar"></div><div class="wave-bar"></div>
-      <div class="wave-bar"></div><div class="wave-bar"></div>
-    </div>
-    <div class="player-progress-wrap" id="progressWrap">
-      <div class="player-progress-fill" id="progressFill"></div>
-    </div>
-    <div class="player-time">
-      <span id="timeCurrent">0:00</span>
-      <span id="timeTotal">0:00</span>
-    </div>
-    <div class="player-controls">
-      <button class="player-btn play-btn" id="playBtn" aria-label="Play/Pausa">&#9654;</button>
-      <div class="player-volume">
-        <span class="player-vol-icon">&#128266;</span>
-        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+    <span class="mp-bubble-icon" aria-hidden="true">&#9836;</span>
+    <div class="player-panel">
+      <div class="player-header">
+        <span class="player-label"><span id="playerDot"></span>Now Playing</span>
+        <button class="player-close-btn" id="playerCloseBtn" aria-label="Chiudi player">&#10005;</button>
+      </div>
+      <div class="player-track">Colonna sonora</div>
+      <div class="player-track-sub">Colonna sonora del sito</div>
+      <div class="player-wave" id="playerWave">
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <div class="player-progress-wrap" id="progressWrap">
+        <div class="player-progress-fill" id="progressFill"></div>
+      </div>
+      <div class="player-time">
+        <span id="timeCurrent">0:00</span>
+        <span id="timeTotal">0:00</span>
+      </div>
+      <div class="player-controls">
+        <button class="player-btn play-btn" id="playBtn" aria-label="Play/Pausa">&#9654;</button>
+        <div class="player-volume">
+          <span class="player-vol-icon">&#128266;</span>
+          <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+        </div>
       </div>
     </div>
-  </div>
+  </div>  </div>
 
   <audio id="bgMusic" loop>
     <source src="audio/Lil Uzi Vert- 20 Min (Instrumental).mp3" type="audio/mpeg">

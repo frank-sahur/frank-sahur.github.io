@@ -78,9 +78,9 @@
           <h2 class="section-title">Un'epoca che cambiò il mondo per sempre</h2>
           <div class="gold-line"></div>
           
-          <p class="section-body">Tra il XV e il XVII secolo, la penisola iberica divenne il centro del mondo conosciuto. Ferdinando d'Aragona e Isabella di Castiglia unificarono i regni spagnoli, mentre i loro esploratori solcavano oceani inesplorati, ridisegnando le mappe e aprendo rotte commerciali che avrebbero trasformato per sempre l'economia globale.</p>
+          <p class="section-body">Le grandi scoperte geografiche furono rese possibili anche dalla stabilità politica raggiunta in Spagna dopo la conclusione della Reconquista nel 1492. La costruzione della monarchia spagnola era iniziata nel 1469 con il matrimonio tra Isabella di Castiglia e Ferdinando d'Aragona, un'unione che segnò l'avvio del processo di unificazione politica. Grazie al sostegno di questi sovrani, esploratori come Cristoforo Colombo e Amerigo Vespucci avviarono viaggi che portarono alla scoperta di nuovi territori.</p>
           <br>
-          <p class="section-body">La Reconquista, completata nel 1492, e la partenza di Colombo verso ovest nel medesimo anno non furono casualità: erano il frutto di una visione politica precisa, di una monarchia ambiziosa e di un'era in cui fede, potere e avventura si intrecciavano indissolubilmente.</p>
+          <p class="section-body">Il 1492 fu un anno decisivo: la Reconquista si concluse con la conquista del Regno di Granada, e pochi mesi dopo Colombo raggiunse il continente americano. Non fu una coincidenza — era il frutto di una visione politica precisa, di una monarchia ambiziosa e di un'era in cui fede, potere e avventura si intrecciavano indissolubilmente.</p>
         </div>
         
         <!-- Protagonisti -->
@@ -169,7 +169,7 @@
             <span class="card-icon">&#9875;</span>
             <span class="card-year">1492 &mdash; 1504</span>
             <h3 class="card-name">Cristoforo Colombo</h3>
-            <p class="card-text">Navigatore genovese al servizio della Corona spagnola, raggiunse il continente americano aprendo una nuova era di esplorazioni e colonizzazione.</p>
+            <p class="card-text">Navigatore genovese al servizio della Corona spagnola, raggiunse il continente americano il 12 ottobre 1492 dopo 70 giorni di navigazione, credendo di essere giunto in Asia. La sua impresa aprì una nuova era di esplorazioni e colonizzazione.</p>
             <a href="/esploratori.html" class="card-link">Approfondisci &rarr;</a>
           </div>
         </div>
@@ -191,7 +191,7 @@
             <span class="card-icon">&#128506;</span>
             <span class="card-year">1498 &mdash; 1502</span>
             <h3 class="card-name">Amerigo Vespucci</h3>
-            <p class="card-text">Esploratore fiorentino che per primo teorizzò che le terre scoperte da Colombo fossero un continente distinto dall'Asia.</p>
+            <p class="card-text">Esploratore fiorentino che, a differenza di Colombo, comprese che le terre scoperte erano un continente completamente nuovo. Le sue lettere convinsero il cartografo Waldseemüller a chiamarlo <em>America</em> nel 1507.</p>
             <a href="/esploratori.html" class="card-link">Approfondisci &rarr;</a>
           </div>
         </div>
@@ -302,37 +302,37 @@
 
   <!-- ====================== MUSIC PLAYER ====================== -->
   <div id="musicPlayer">
-    <div class="player-header">
-      <span class="player-label"><span id="playerDot"></span>Now Playing</span>
-    </div>
-    <div class="player-track">Colonna sonora &mdash;</div>
-    <div class="player-track-sub">Colonna sonora del sito</div>
-    <div class="player-wave" id="playerWave">
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-    </div>
-    <div class="player-progress-wrap" id="progressWrap">
-      <div class="player-progress-fill" id="progressFill"></div>
-    </div>
-    <div class="player-time">
-      <span id="timeCurrent">0:00</span>
-      <span id="timeTotal">0:00</span>
-    </div>
-    <div class="player-controls">
-      <button class="player-btn play-btn" id="playBtn" aria-label="Play/Pausa">&#9654;</button>
-      <div class="player-volume">
-        <span class="player-vol-icon">&#128266;</span>
-        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+    <!-- Icona nota visibile quando il player è chiuso -->
+    <span class="mp-bubble-icon" aria-hidden="true">&#9836;</span>
+    <!-- Pannello completo, visibile solo quando aperto -->
+    <div class="player-panel">
+      <div class="player-header">
+        <span class="player-label"><span id="playerDot"></span>Now Playing</span>
+        <button class="player-close-btn" id="playerCloseBtn" aria-label="Chiudi player">&#10005;</button>
+      </div>
+      <div class="player-track">Colonna sonora &mdash;</div>
+      <div class="player-track-sub">Colonna sonora del sito</div>
+      <div class="player-wave" id="playerWave">
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <div class="player-progress-wrap" id="progressWrap">
+        <div class="player-progress-fill" id="progressFill"></div>
+      </div>
+      <div class="player-time">
+        <span id="timeCurrent">0:00</span>
+        <span id="timeTotal">0:00</span>
+      </div>
+      <div class="player-controls">
+        <button class="player-btn play-btn" id="playBtn" aria-label="Play/Pausa">&#9654;</button>
+        <div class="player-volume">
+          <span class="player-vol-icon">&#128266;</span>
+          <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+        </div>
       </div>
     </div>
   </div>

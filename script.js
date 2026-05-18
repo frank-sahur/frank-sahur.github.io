@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
 
   // ═══════════════════════════════════════════
@@ -38,23 +37,35 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 500);
     }
 
-    // Titolo principale con effetto flash colorato
+    // Titolo principale — parte glitchato e si RIUNIFICA
     setTimeout(() => {
-      const flashColors = ['#FF003C', '#00FFE5', '#FFE600', '#FF003C', null];
+      title.style.opacity    = '1';
+      title.style.color      = 'var(--glitch-cyan)';
+      title.style.filter     = 'blur(4px)';
+      title.style.transform  = 'skewX(14deg) translateX(-10px)';
+      title.style.textShadow = '0 0 24px var(--glitch-cyan), 0 0 60px var(--glitch-cyan)';
+
+      // Piccoli flash colorati prima della riunificazione
+      const flashColors = ['#FF003C', '#FFE600', '#00FFE5', '#FF003C', null];
       let i = 0;
       const flash = setInterval(() => {
         if (i < flashColors.length - 1) {
-          title.style.opacity     = '1';
-          title.style.color       = flashColors[i];
-          title.style.textShadow  = `0 0 24px ${flashColors[i]}, 0 0 60px ${flashColors[i]}`;
+          title.style.color      = flashColors[i];
+          title.style.textShadow = `0 0 24px ${flashColors[i]}, 0 0 60px ${flashColors[i]}`;
           i++;
         } else {
           clearInterval(flash);
+          // Avvia animazione di riunificazione
           title.style.color      = '';
+          title.style.filter     = '';
+          title.style.transform  = '';
           title.style.textShadow = '';
           void title.offsetWidth;
           title.classList.add('glitch-in');
-          setTimeout(() => title.classList.add('glitch-active'), 150);
+          // Dopo la riunificazione: titolo stabile, nessun loop di glitch
+          setTimeout(() => {
+            title.classList.remove('glitch-active');
+          }, 150);
         }
       }, 60);
     }, 1000);
@@ -307,6 +318,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const playerWave   = document.getElementById('playerWave');
     const playerDot    = document.getElementById('playerDot');
     const playerBox    = document.getElementById('musicPlayer');
+    const closeBtn     = document.getElementById('playerCloseBtn');
+
+    if (!playerBox) return;
+
+    // ── Toggle apertura / chiusura ──
+    playerBox.addEventListener('click', function () {
+      if (!playerBox.classList.contains('open')) {
+        playerBox.classList.add('open');
+      }
+    });
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function (e) {
+        e.stopPropagation(); // impedisce la riapertura immediata
+        playerBox.classList.remove('open');
+      });
+    }
 
     if (!audio || !playBtn) return;
 
@@ -320,20 +347,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setPlaying(playing) {
       if (playing) {
-        playBtn.innerHTML = '&#9646;&#9646;';           // Pause
+        playBtn.innerHTML = '&#9646;&#9646;';
         playerWave.classList.add('player-playing');
         playerDot.classList.remove('paused');
         playerBox.classList.add('playing');
       } else {
-        playBtn.innerHTML = '&#9654;';                  // Play
+        playBtn.innerHTML = '&#9654;';
         playerWave.classList.remove('player-playing');
         playerDot.classList.add('paused');
         playerBox.classList.remove('playing');
       }
     }
 
-    // Play / Pause
-    playBtn.addEventListener('click', () => {
+    // Play / Pause (stopPropagation per non riaprire il player se è chiuso)
+    playBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       if (audio.paused) {
         audio.play().catch(err => console.warn('Riproduzione audio bloccata dal browser:', err));
       } else {
@@ -344,26 +372,24 @@ document.addEventListener('DOMContentLoaded', () => {
     audio.addEventListener('play',  () => setPlaying(true));
     audio.addEventListener('pause', () => setPlaying(false));
 
-    // Aggiorna barra di progresso e tempo
     audio.addEventListener('timeupdate', () => {
       if (!audio.duration) return;
       progressFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
       timeCurrent.textContent  = formatTime(audio.currentTime);
     });
 
-    // Imposta durata totale quando il file è caricato
     audio.addEventListener('loadedmetadata', () => {
       timeTotal.textContent = formatTime(audio.duration);
     });
 
-    // Clic sulla barra per cambiare posizione
     progressWrap.addEventListener('click', e => {
+      e.stopPropagation();
       const rect = progressWrap.getBoundingClientRect();
       audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
     });
 
-    // Controllo volume
-    volumeSlider.addEventListener('input', () => {
+    volumeSlider.addEventListener('input', (e) => {
+      e.stopPropagation();
       audio.volume = volumeSlider.value;
     });
 

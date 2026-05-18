@@ -216,14 +216,18 @@ nav.scrolled {  /* Stile navbar quando la pagina viene scrollata */
 }
 .hero-title span { color: var(--gold); }  /* Span nel titolo: colore oro per enfasi */
 
-.hero-title.glitch-in {  /* Animazione rivelazione titolo */
-  animation: titleReveal 0.1s steps(1) forwards;  /* Rivelazione rapida */
+.hero-title.glitch-in {
+  /*l'animazione è la RIUNIFICAZIONE: da glitch a normale */
+  animation: titleUnify 1.2s steps(1) forwards;
 }
 
 /* pseudo-elements per effetto RGB-split */
-.hero-title.glitch-active {  /* Stato glitch attivo sul titolo */
-  animation: glitchLoop 4s infinite;  /* Loop glitch infinito ogni 4s */
+.hero-title.glitch-active {
+  animation: none;
+  filter: none;
+  transform: none;
 }
+
 .hero-title.glitch-active::before,
 .hero-title.glitch-active::after {  /* Pseudo-elementi per effetto RGB split */
   content: attr(data-text);  /* Ripete il testo del titolo */
@@ -808,259 +812,304 @@ footer {  /* Footer del sito */
 }
 
 /* ═══════════════════════════════════════
-   MUSIC PLAYER
+   MUSIC PLAYER — collassabile
    ═══════════════════════════════════════ */
 
-#musicPlayer { /* Contenitore principale del player musicale */
-  position: fixed; /* Il player rimane fisso sullo schermo */
-  bottom: 32px; /* Distanza dal basso */
-  left: 32px; /* Distanza da sinistra */
-  z-index: 998; /* Rimane sopra agli altri elementi */
-  width: 300px; /* Larghezza del player */
-  background: transparent; /* Sfondo completamente trasparente */
-  backdrop-filter: none; /* Nessuna sfocatura */
- -webkit-backdrop-filter: none; /* Nessuna sfocatura su Safari */
-  border: 1px solid rgba(0,255,229,0.08); /* Bordo ciano molto leggero */
-  box-shadow: 0 0 6px rgba(0,255,229,0.03); /* Glow quasi invisibile */
-  padding: 16px 18px; /* Spazio interno */
-  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s; /* Animazioni fluide */
+#musicPlayer {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  z-index: 998;
+  width: 52px;
+  height: 52px;
+  background: rgba(10, 7, 3, 0.92);
+  border: 1px solid rgba(0,255,229,0.25);
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    width  0.42s cubic-bezier(.4,0,.2,1),
+    height 0.42s cubic-bezier(.4,0,.2,1),
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+#musicPlayer::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px;
+  width: 8px; height: 8px;
+  border-top:  2px solid var(--glitch-cyan);
+  border-left: 2px solid var(--glitch-cyan);
+  pointer-events: none;
+}
+#musicPlayer::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; right: -1px;
+  width: 8px; height: 8px;
+  border-bottom: 2px solid var(--glitch-magenta);
+  border-right:  2px solid var(--glitch-magenta);
+  pointer-events: none;
+}
+#musicPlayer:hover {
+  border-color: rgba(0,255,229,0.5);
+  box-shadow: 0 0 20px rgba(0,255,229,0.1);
+}
+#musicPlayer.open {
+  width: 300px;
+  height: auto;
+  overflow: visible;
+  cursor: default;
+}
+#musicPlayer.open.playing {
+  animation: playerGlitch 7s infinite;
 }
 
-#musicPlayer:hover {  /* Hover player */
-  border-color: rgba(0,255,229,0.5);  /* Bordo più visibile */
-  box-shadow: 0 0 32px rgba(0,255,229,0.15), 0 0 8px rgba(255,0,60,0.2);  /* Glow più intenso */
+/* ── Icona musicale quando chiuso ── */
+.mp-bubble-icon {
+  position: absolute;
+  top: 0; left: 0;
+  width: 52px; height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--glitch-cyan);
+  font-size: 1.5rem;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+#musicPlayer.open .mp-bubble-icon {
+  opacity: 0;
 }
 
-/* angolini decorativi */
-#musicPlayer::before,  /* Angolo decorativo superiore sinistro */
-#musicPlayer::after {  /* Angolo decorativo inferiore destro */
-  content: '';  /* Pseudo-elementi vuoti */
-  position: absolute;  /* Posizionamento assoluto */
-  width: 8px; height: 8px;  /* 8x8px */
+/* ── Pannello interno (visibile solo da aperto) ── */
+.player-panel {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s 0.15s;
+  padding: 16px 18px;
+  width: 300px;
 }
-#musicPlayer::before {  /* Angolo top-left ciano */
-  top: -1px; left: -1px;  /* Posizione angolo alto */
-  border-top: 2px solid var(--glitch-cyan);  /* Bordo superiore ciano */
-  border-left: 2px solid var(--glitch-cyan);  /* Bordo sinistro ciano */
-}
-#musicPlayer::after {  /* Angolo bottom-right magenta */
-  bottom: -1px; right: -1px;  /* Posizione angolo basso */
-  border-bottom: 2px solid var(--glitch-magenta);  /* Bordo inferiore magenta */
-  border-right: 2px solid var(--glitch-magenta);  /* Bordo destro magenta */
+#musicPlayer.open .player-panel {
+  opacity: 1;
+  pointer-events: all;
 }
 
 /* header del player */
-.player-header {  /* Header del player */
-  display: flex;  /* Layout flex */
-  justify-content: space-between;  /* Spazio tra elementi */
-  align-items: center;  /* Centrati verticalmente */
-  margin-bottom: 12px;  /* Margine inferiore */
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
 }
-.player-label {  /* Etichetta "NOW PLAYING" */
-  font-family: 'Cinzel', serif;  /* Font decorativo */
-  font-size: 0.55rem;  /* Font molto piccolo */
-  letter-spacing: 3px;  /* Spaziatura */
-  color: var(--glitch-cyan);  /* Colore ciano */
-  text-transform: uppercase;  /* Maiuscolo */
+.player-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 3px;
+  color: var(--glitch-cyan);
+  text-transform: uppercase;
 }
-.player-label span {  /* Pallino indicatore stato (lampeggiante) */
-  display: inline-block;  /* Inline ma con dimensioni */
-  width: 6px; height: 6px;  /* 6x6px */
-  background: var(--glitch-cyan);  /* Ciano quando in riproduzione */
-  border-radius: 50%;  /* Circolare */
-  margin-right: 6px;  /* Spazio a destra */
-  animation: playerBlink 1.2s ease infinite;  /* Lampeggio infinito */
+.player-label span {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--glitch-cyan);
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: playerBlink 1.2s ease infinite;
 }
-.player-label span.paused {  /* Stato pausa del pallino */
-  background: var(--text-muted);  /* Colore attenuato */
-  animation: none;  /* Nessuna animazione */
+.player-label span.paused {
+  background: var(--text-muted);
+  animation: none;
 }
-@keyframes playerBlink {  /* Animazione lampeggio pallino */
-  0%, 100% { opacity: 1; }  /* Visibile */
-  50%       { opacity: 0.2; }  /* Quasi invisibile */
+@keyframes playerBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
 }
+
+/* bottone chiudi */
+.player-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  transition: color 0.2s;
+  line-height: 1;
+}
+.player-close-btn:hover { color: var(--glitch-cyan); }
 
 /* titolo canzone */
-.player-track {  /* Titolo canzone in riproduzione */
-  font-family: 'Cinzel', serif;  /* Font decorativo */
-  font-size: 0.7rem;  /* Font piccolo */
-  color: var(--parchment);  /* Colore pergamena */
-  letter-spacing: 1px;  /* Spaziatura */
-  margin-bottom: 12px;  /* Margine */
-  white-space: nowrap;  /* Nessun a capo */
-  overflow: hidden;  /* Nasconde overflow */
-  text-overflow: ellipsis;  /* Puntini di sospensione se troppo lungo */
+.player-track {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  color: var(--parchment);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.player-track-sub {  /* Sottotitolo/artista */
-  font-family: 'EB Garamond', serif;  /* Font serif */
-  font-size: 0.75rem;  /* Font piccolo */
-  color: var(--text-muted);  /* Colore attenuato */
-  margin-bottom: 14px;  /* Margine */
-  font-style: italic;  /* Corsivo */
-}
-
-/* waveform bars */
-.player-wave {  /* Contenitore barre waveform animate */
-  display: flex;  /* Layout orizzontale */
-  align-items: flex-end;  /* Allineate in basso */
-  gap: 3px;  /* Spazio tra barre */
-  height: 28px;  /* Altezza totale */
-  margin-bottom: 14px;  /* Margine */
-}
-.wave-bar {  /* Singola barra waveform */
-  flex: 1;  /* Larghezza uguale tra tutte */
-  background: var(--glitch-cyan);  /* Colore ciano di default */
-  border-radius: 1px;  /* Leggermente arrotondata */
-  opacity: 0.7;  /* Trasparenza */
-  transform-origin: bottom;  /* Scala dal basso verso l'alto */
-  min-height: 3px;  /* Altezza minima */
-}
-.player-playing .wave-bar { animation: waveAnim var(--dur, 0.8s) ease-in-out infinite alternate; }  /* Animazione onda quando in riproduzione */
-.wave-bar:nth-child(1)  { --dur: 0.55s; height: 30%; }  /* Barra 1: durata 0.55s, altezza 30% */
-.wave-bar:nth-child(2)  { --dur: 0.72s; height: 70%; }  /* Barra 2: durata 0.72s, altezza 70% */
-.wave-bar:nth-child(3)  { --dur: 0.48s; height: 45%; }  /* Barra 3: durata 0.48s, altezza 45% */
-.wave-bar:nth-child(4)  { --dur: 0.85s; height: 90%; }  /* Barra 4: durata 0.85s, altezza 90% */
-.wave-bar:nth-child(5)  { --dur: 0.61s; height: 55%; }  /* Barra 5: durata 0.61s, altezza 55% */
-.wave-bar:nth-child(6)  { --dur: 0.77s; height: 100%; }  /* Barra 6: durata 0.77s, altezza 100% */
-.wave-bar:nth-child(7)  { --dur: 0.53s; height: 65%; }  /* Barra 7: durata 0.53s, altezza 65% */
-.wave-bar:nth-child(8)  { --dur: 0.90s; height: 40%; }  /* Barra 8: durata 0.90s, altezza 40% */
-.wave-bar:nth-child(9)  { --dur: 0.66s; height: 75%; }  /* Barra 9: durata 0.66s, altezza 75% */
-.wave-bar:nth-child(10) { --dur: 0.44s; height: 30%; }  /* Barra 10: durata 0.44s, altezza 30% */
-.wave-bar:nth-child(11) { --dur: 0.79s; height: 85%; }  /* Barra 11: durata 0.79s, altezza 85% */
-.wave-bar:nth-child(12) { --dur: 0.58s; height: 50%; }  /* Barra 12: durata 0.58s, altezza 50% */
-.wave-bar:nth-child(odd)  { background: var(--glitch-cyan); }  /* Barre dispari: colore ciano */
-.wave-bar:nth-child(even) { background: var(--glitch-magenta); opacity: 0.5; }  /* Barre pari: colore magenta, più trasparenti */
-
-@keyframes waveAnim {  /* Animazione onda delle barre */
-  from { transform: scaleY(0.2); opacity: 0.4; }  /* Inizio: altezza minima, poco visibile */
-  to   { transform: scaleY(1);   opacity: 0.9; }  /* Fine: altezza massima, molto visibile */
+.player-track-sub {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  font-style: italic;
 }
 
-/* progress bar */
-.player-progress-wrap {  /* Contenitore barra progresso */
-  position: relative;  /* Per posizionamento thumb */
-  height: 3px;  /* Altezza 3px */
-  background: rgba(255,255,255,0.08);  /* Sfondo quasi invisibile */
-  margin-bottom: 14px;  /* Margine */
-  cursor: pointer;  /* Cliccabile per seek */
+/* waveform */
+.player-wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 28px;
+  margin-bottom: 14px;
 }
-.player-progress-wrap:hover { height: 5px; margin-bottom: 12px; }  /* Hover: si ingrossa, compensa margine */
-.player-progress-fill {  /* Riempimento barra progresso (parte colorata) */
-  height: 100%;  /* Altezza piena del contenitore */
-  width: 0%;  /* Inizialmente zero (aggiornato da JS) */
-  background: linear-gradient(90deg, var(--glitch-cyan), var(--glitch-magenta));  /* Gradiente ciano→magenta */
-  transition: width 0.25s linear;  /* Aggiornamento fluido */
-  position: relative;  /* Per thumb */
+.wave-bar {
+  flex: 1;
+  background: var(--glitch-cyan);
+  border-radius: 1px;
+  opacity: 0.7;
+  transform-origin: bottom;
+  min-height: 3px;
 }
-.player-progress-fill::after {  /* Thumb/pallino sulla barra progresso */
-  content: '';  /* Pseudo-elemento vuoto */
-  position: absolute;  /* Posizionamento assoluto */
-  right: -4px; top: 50%;  /* A destra della barra, al centro verticale */
-  transform: translateY(-50%);  /* Centratura verticale precisa */
-  width: 8px; height: 8px;  /* 8x8px */
-  background: var(--glitch-cyan);  /* Ciano */
-  border-radius: 50%;  /* Circolare */
-  box-shadow: 0 0 6px var(--glitch-cyan);  /* Glow */
-  opacity: 0;  /* Inizialmente invisibile */
-  transition: opacity 0.2s;  /* Transizione */
+.player-playing .wave-bar { animation: waveAnim var(--dur, 0.8s) ease-in-out infinite alternate; }
+.wave-bar:nth-child(1)  { --dur:0.55s; height:30%; }
+.wave-bar:nth-child(2)  { --dur:0.72s; height:70%; }
+.wave-bar:nth-child(3)  { --dur:0.48s; height:45%; }
+.wave-bar:nth-child(4)  { --dur:0.85s; height:90%; }
+.wave-bar:nth-child(5)  { --dur:0.61s; height:55%; }
+.wave-bar:nth-child(6)  { --dur:0.77s; height:100%; }
+.wave-bar:nth-child(7)  { --dur:0.53s; height:65%; }
+.wave-bar:nth-child(8)  { --dur:0.90s; height:40%; }
+.wave-bar:nth-child(9)  { --dur:0.66s; height:75%; }
+.wave-bar:nth-child(10) { --dur:0.44s; height:30%; }
+.wave-bar:nth-child(11) { --dur:0.79s; height:85%; }
+.wave-bar:nth-child(12) { --dur:0.58s; height:50%; }
+.wave-bar:nth-child(odd)  { background: var(--glitch-cyan); }
+.wave-bar:nth-child(even) { background: var(--glitch-magenta); opacity:0.5; }
+@keyframes waveAnim {
+  from { transform:scaleY(0.2); opacity:0.4; }
+  to   { transform:scaleY(1);   opacity:0.9; }
 }
-.player-progress-wrap:hover .player-progress-fill::after { opacity: 1; }  /* Thumb visibile in hover */
+
+/* progress */
+.player-progress-wrap {
+  position: relative;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  margin-bottom: 14px;
+  cursor: pointer;
+  transition: height 0.2s, margin-bottom 0.2s;
+}
+.player-progress-wrap:hover { height:5px; margin-bottom:12px; }
+.player-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--glitch-cyan), var(--glitch-magenta));
+  transition: width 0.25s linear;
+  position: relative;
+}
+.player-progress-fill::after {
+  content: '';
+  position: absolute;
+  right: -4px; top: 50%;
+  transform: translateY(-50%);
+  width: 8px; height: 8px;
+  background: var(--glitch-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--glitch-cyan);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.player-progress-wrap:hover .player-progress-fill::after { opacity:1; }
 
 /* time */
-.player-time {  /* Tempo corrente / totale */
-  display: flex;  /* Layout flex */
-  justify-content: space-between;  /* Ai lati opposti */
-  font-family: 'Cinzel', serif;  /* Font decorativo */
-  font-size: 0.55rem;  /* Font molto piccolo */
-  color: var(--text-muted);  /* Colore attenuato */
-  letter-spacing: 1px;  /* Spaziatura */
-  margin-bottom: 14px;  /* Margine */
+.player-time {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 14px;
 }
 
 /* controls */
-.player-controls {  /* Controlli play/pause/skip */
-  display: flex;  /* Layout orizzontale */
-  align-items: center;  /* Centrati verticalmente */
-  gap: 12px;  /* Spazio tra bottoni */
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-.player-btn {  /* Bottone generico player */
-  background: none;  /* Nessuno sfondo */
-  border: 1px solid rgba(0,255,229,0.2);  /* Bordo ciano trasparente */
-  color: var(--glitch-cyan);  /* Icona ciana */
-  width: 36px; height: 36px;  /* 36x36px */
-  cursor: pointer;  /* Cursore a mano */
-  font-size: 0.9rem;  /* Dimensione icona */
-  display: flex;  /* Centratura flex */
-  align-items: center;  /* Centrato verticale */
-  justify-content: center;  /* Centrato orizzontale */
-  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;  /* Transizioni rapide */
-  flex-shrink: 0;  /* Non si restringe */
+.player-btn {
+  background: none;
+  border: 1px solid rgba(0,255,229,0.2);
+  color: var(--glitch-cyan);
+  width: 36px; height: 36px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
 }
-.player-btn:hover {  /* Hover bottone player */
-  background: rgba(0,255,229,0.1);  /* Sfondo ciano trasparente */
-  border-color: var(--glitch-cyan);  /* Bordo pieno ciano */
-  box-shadow: 0 0 10px rgba(0,255,229,0.3);  /* Glow ciano */
+.player-btn:hover {
+  background: rgba(0,255,229,0.1);
+  border-color: var(--glitch-cyan);
+  box-shadow: 0 0 10px rgba(0,255,229,0.3);
 }
-.player-btn.play-btn {  /* Bottone play principale (più grande) */
-   width: 44px; height: 44px;  /* Dimensioni aumentate: 44x44px per il bottone play principale */
-  font-size: 1.1rem;  /* Icona play più grande (1.1rem vs 0.9rem dei bottoni normali) */
-  border-color: rgba(0,255,229,0.4);  /* Bordo ciano più marcato (opacità 40% vs 20%) per enfatizzare il play */
+.player-btn.play-btn {
+  width: 44px; height: 44px;
+  font-size: 1.1rem;
+  border-color: rgba(0,255,229,0.4);
 }
-.player-btn.play-btn:hover {  /* Stato hover del bottone play principale */
-  box-shadow: 0 0 16px rgba(0,255,229,0.4);  /* Glow ciano più intenso al passaggio del mouse */
-}
+.player-btn.play-btn:hover { box-shadow: 0 0 16px rgba(0,255,229,0.4); }
 
 /* volume */
-.player-volume {  /* Sezione controllo volume: contiene icona e slider */
-  flex: 1;  /* Occupa tutto lo spazio rimanente nella riga dei controlli */
-  display: flex;  /* Layout orizzontale: icona + slider affiancati */
-  align-items: center;  /* Allineamento verticale centrato tra icona e slider */
-  gap: 8px;  /* Spazio di 8px tra l'icona volume e lo slider */
+.player-volume {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-.player-vol-icon {  /* Icona altoparlante (🔊) a sinistra dello slider */
-  font-size: 0.75rem;  /* Dimensione piccola dell'icona */
-  color: var(--text-muted);  /* Colore attenuato per non distrarre */
-  flex-shrink: 0;  /* L'icona non si restringe mai, mantiene dimensione fissa */
+.player-vol-icon { font-size:0.75rem; color:var(--text-muted); flex-shrink:0; }
+.volume-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: rgba(255,255,255,0.1);
+  outline: none;
+  cursor: pointer;
 }
-.volume-slider {  /* Slider/input range per regolare il volume */
-  flex: 1;  /* Occupa tutto lo spazio rimanente dopo l'icona */
-  -webkit-appearance: none;  /* Rimuove lo stile di default del browser WebKit (Chrome, Safari, Edge) */
-  appearance: none;  /* Rimuove lo stile di default standard per tutti i browser */
-  height: 2px;  /* Altezza della barra del slider: sottile linea di 2px */
-  background: rgba(255,255,255,0.1);  /* Sfondo quasi invisibile (bianco al 10%) */
-  outline: none;  /* Nessun bordo di focus visibile (outline blu di default) */
-  cursor: pointer;  /* Cursore a mano per indicare che è cliccabile/draggabile */
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width:10px; height:10px;
+  border-radius:50%;
+  background: var(--glitch-cyan);
+  box-shadow: 0 0 6px var(--glitch-cyan);
+  cursor: pointer;
 }
-.volume-slider::-webkit-slider-thumb {  /* Stile del "pallino" thumb su browser WebKit (Chrome, Safari, Edge) */
-  -webkit-appearance: none;  /* Rimuove lo stile di default del thumb */
-  width: 10px; height: 10px;  /* Dimensione del thumb: piccolo cerchietto 10x10px */
-  border-radius: 50%;  /* Forma perfettamente circolare */
-  background: var(--glitch-cyan);  /* Colore ciano per coerenza con il tema glitch */
-  box-shadow: 0 0 6px var(--glitch-cyan);  /* Glow ciano attorno al thumb */
-  cursor: pointer;  /* Cursore a mano anche sul thumb */
-}
-.volume-slider::-moz-range-thumb {  /* Stile del thumb su Firefox (prefisso -moz-) */
-  width: 10px; height: 10px;  /* Stesse dimensioni del thumb WebKit */
-  border-radius: 50%;  /* Forma circolare */
-  background: var(--glitch-cyan);  /* Stesso colore ciano */
-  border: none;  /* Nessun bordo di default Firefox */
-  cursor: pointer;  /* Cursore a mano */
+.volume-slider::-moz-range-thumb {
+  width:10px; height:10px;
+  border-radius:50%;
+  background: var(--glitch-cyan);
+  border: none;
+  cursor: pointer;
 }
 
-/* glitch flash occasionale sul player */
-@keyframes playerGlitch {  /* Animazione glitch che si attiva occasionalmente sul player in riproduzione */
-  0%, 95%, 100% { transform: none; filter: none; }  /* Per il 95% del tempo il player è normale */
-  96% { transform: translateX(2px); filter: hue-rotate(90deg); }  /* Al 96%: sposta a destra di 2px + rotazione tonalità verso il verde */
-  97% { transform: translateX(-2px); filter: hue-rotate(-90deg); }  /* Al 97%: sposta a sinistra di 2px + rotazione tonalità opposta verso il blu */
-  98% { transform: none; filter: none; }  /* Al 98%: torna normale, il glitch dura solo pochi frame */
-}
-#musicPlayer.playing {  /* Quando il player ha la classe "playing" (musica in riproduzione) */
-  animation: playerGlitch 7s infinite;  /* Applica il glitch ogni 7 secondi in loop infinito */
+@keyframes playerGlitch {
+  0%, 95%, 100% { transform:none; filter:none; }
+  96% { transform:translateX(2px);  filter:hue-rotate(90deg); }
+  97% { transform:translateX(-2px); filter:hue-rotate(-90deg); }
+  98% { transform:none; filter:none; }
 }
 
-/* responsive */
-@media (max-width: 480px) {  /* Media query per schermi molto piccoli (smartphone) */
-  #musicPlayer { width: calc(100vw - 48px); left: 24px; bottom: 24px; }  /* Player largo quasi tutto lo schermo (viewport - 48px margini), posizionato 24px dai bordi */
+@media (max-width: 480px) {
+  #musicPlayer       { left:24px; bottom:24px; }
+  #musicPlayer.open  { width:calc(100vw - 48px); }
 }
 
 
